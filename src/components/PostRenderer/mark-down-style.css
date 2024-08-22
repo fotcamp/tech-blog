@@ -1,0 +1,5 @@
+.code-block {
+  padding: var(--space-1);
+  background-color: var(--accent-3);
+  border-radius: var(--radius-1);
+}

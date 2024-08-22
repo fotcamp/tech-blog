@@ -53,6 +53,7 @@
     "react/no-unescaped-entities": 0,
     "react/no-children-prop": 0,
     "jsx-a11y/label-has-associated-control": 0,
-    "no-alert": 0
+    "no-alert": 0,
+    "@typescript-eslint/no-unused-vars": 0
   }
 }
