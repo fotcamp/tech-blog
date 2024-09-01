@@ -11,6 +11,11 @@ env:
   SERVICE_NAME: techBlog
 on:
   workflow_dispatch:
+    inputs:
+      region:
+        type: string
+      env:
+        type: string
   # [push]
   # push:
   # branches:
