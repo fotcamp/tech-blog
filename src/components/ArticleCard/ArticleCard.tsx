@@ -20,7 +20,7 @@ export const ArticleCard = ({
           <Box
             position="relative"
             overflow="hidden"
-            style={{ borderRadius: 20, backgroundColor: "#232" }}
+            style={{ borderRadius: 20 }}
             width="100%"
             height="250px"
           >

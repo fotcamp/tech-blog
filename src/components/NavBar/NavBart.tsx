@@ -18,8 +18,8 @@ export function NavBar() {
       {/* <Button onClick={toggleMode}> Toggle mode </Button> */}
       <header>
         <Link href="/" underline="none">
-          <Flex align={"center"} gap={"20px"}>
-            <Image src="/app_icon.svg" alt="app_icon" width={48} height={48}></Image>
+          <Flex align="center" gap="20px">
+            <Image src="/app_icon.svg" alt="app_icon" width={48} height={48} />
             <p style={{ color: "black" }}>
               <Strong>fotcamp </Strong>tech
             </p>

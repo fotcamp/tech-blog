@@ -1,12 +1,11 @@
-import { Box, Button, Flex, Grid, Text } from "@radix-ui/themes";
+import { Box, Flex, Text } from "@radix-ui/themes";
 import { getArticleInfoList } from "@/api/notion";
-import { ArticleCard } from "@/components/ArticleCard/ArticleCard";
+// import { ArticleCard } from "@/components/ArticleCard/ArticleCard";
 import "./page.css";
 import FilterableArticleList from "./FilterableArticleList";
 
 export default async function Home() {
   const notionArticles = await getArticleInfoList();
-
   const allRoles = Array.from(
     new Set(
       notionArticles.flatMap(article =>
@@ -15,7 +14,6 @@ export default async function Home() {
     )
   );
   const roles = ["전체", ...allRoles];
-  console.log(roles);
 
   return (
     <>

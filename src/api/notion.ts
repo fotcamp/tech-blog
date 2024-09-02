@@ -34,13 +34,7 @@ export async function queryNotionDatabase(): Promise<DatabaseObjectResponse[]> {
             }
           }
         ]
-      },
-      sorts: [
-        {
-          property: "role",
-          direction: "ascending"
-        }
-      ]
+      }
     });
 
     return response.results as DatabaseObjectResponse[];

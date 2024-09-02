@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { Box, Flex, Grid, Text, Button } from "@radix-ui/themes";
-import { Article } from "@/api/types";
-import { ArticleCard } from "@/components/ArticleCard/ArticleCard";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { Flex, Grid, Text, Button } from "@radix-ui/themes";
+import { Article } from "../api/types";
+import { ArticleCard } from "../components/ArticleCard/ArticleCard";
 
 interface FilterableArticleListProps {
   articles: Article[];
@@ -11,26 +12,58 @@ interface FilterableArticleListProps {
 }
 
 const FilterableArticleList = ({ articles, roles }: FilterableArticleListProps) => {
-  const [filteredArticles, setFilteredArticles] = useState<Article[]>(articles);
-  const [selectedRole, setSelectedRole] = useState<string>("전체");
+  const searchParams = useSearchParams();
+  const initialRole = searchParams.get("role") || "전체";
 
-  const handleRoleClick = (role: string) => {
-    setSelectedRole(role);
-    if (role === "전체") {
+  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
+  const [selectedRole, setSelectedRole] = useState<string>(initialRole);
+
+  useEffect(() => {
+    const roleToFilter = selectedRole === "전체" ? null : selectedRole;
+
+    if (!roleToFilter) {
       setFilteredArticles(articles);
     } else {
       setFilteredArticles(
         articles.filter(article =>
-          article.properties.role.multi_select.some((roleObj: any) => roleObj.name === role)
+          article.properties.role.multi_select.some((roleObj: any) => roleObj.name === roleToFilter)
         )
       );
     }
+  }, [selectedRole, articles]);
+
+  useEffect(() => {
+    const roleToFilter = initialRole === "전체" ? null : initialRole;
+
+    if (!roleToFilter) {
+      setFilteredArticles(articles);
+    } else {
+      setFilteredArticles(
+        articles.filter(article =>
+          article.properties.role.multi_select.some((roleObj: any) => roleObj.name === roleToFilter)
+        )
+      );
+    }
+  }, [initialRole, articles]);
+
+  const handleRoleClick = (role: string) => {
+    setSelectedRole(role);
+    const params = new URLSearchParams(window.location.search);
+    params.set("role", role);
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.pushState(null, "", newUrl);
   };
 
   return (
     <>
-      <Flex style={{ margin: "0 auto" }} width="70%" gap={"4"}>
-        {roles.map((role: any, index: number) => (
+      <Flex
+        wrap={"wrap"}
+        className="responsive-role"
+        style={{ margin: "0 auto" }}
+        width="70%"
+        gap={"4"}
+      >
+        {roles.map((role, index) => (
           <Button
             key={index}
             onClick={() => handleRoleClick(role)}
