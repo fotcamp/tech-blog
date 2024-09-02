@@ -12,6 +12,7 @@ export const ArticleCard = ({
   thumbnailUrl,
   properties
 }: ArticleCardProps) => {
+  const roles = properties.role.multi_select;
   return (
     <Link href={`/posts/${pageId}`}>
       <Box>
@@ -19,25 +20,46 @@ export const ArticleCard = ({
           <Box
             position="relative"
             overflow="hidden"
-            style={{ borderRadius: 20, backgroundColor: "#FFF" }}
-            width="200px"
-            height="200px"
+            style={{ borderRadius: 20, backgroundColor: "#232" }}
+            width="100%"
+            height="250px"
           >
             <Image
               src={thumbnailUrl || ""}
               alt="article thumnail image"
-              width={200}
-              height={200}
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)"
-              }}
+              layout={"fill"}
+              objectFit={"cover"}
             />
           </Box>
-          <Text>{title}</Text>
-          <Text>{createdAt.toISOString()}</Text>
+          <Text
+            style={{
+              marginTop: "20px",
+              color: "#191B1c",
+              fontFamily: "Pretendard Variable",
+              fontSize: "24px",
+              fontWeight: 700
+            }}
+          >
+            {title}
+          </Text>
+          {/* <Text>{createdAt.toISOString()}</Text> */}
+          <Box mt={"20px"}>
+            {roles.map((role: any, index: number) => (
+              <Box
+                key={index}
+                p={"7px 14px"}
+                style={{
+                  backgroundColor: "#E6E8EB",
+                  borderRadius: "20px",
+                  display: "inline-flex",
+                  height: "36px",
+                  padding: "7px 23px"
+                }}
+              >
+                <Text style={{ color: "#7B8287", fontSize: "14px" }}>{role.name}</Text>
+              </Box>
+            ))}
+          </Box>
         </Flex>
       </Box>
     </Link>

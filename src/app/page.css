@@ -1,0 +1,18 @@
+.section-photo {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .section-photo_one {
+    display: none;
+  }
+  .section-photo {
+    display: block;
+  }
+}
+@media (max-width: 700px) {
+  .responsive-grid {
+    grid-template-columns: 1fr !important;
+    width: 80%;
+  }
+}
