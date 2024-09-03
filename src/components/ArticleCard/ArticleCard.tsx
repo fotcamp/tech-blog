@@ -18,11 +18,12 @@ export const ArticleCard = ({
       <Box>
         <Flex direction="column">
           <Box
+            className="img_box"
             position="relative"
             overflow="hidden"
-            style={{ borderRadius: 20 }}
             width="100%"
             height="250px"
+            style={{ borderRadius: 20 }}
           >
             <Image
               src={thumbnailUrl || ""}
@@ -52,8 +53,7 @@ export const ArticleCard = ({
                   backgroundColor: "#E6E8EB",
                   borderRadius: "20px",
                   display: "inline-flex",
-                  height: "36px",
-                  padding: "7px 23px"
+                  height: "36px"
                 }}
               >
                 <Text style={{ color: "#7B8287", fontSize: "14px" }}>{role.name}</Text>

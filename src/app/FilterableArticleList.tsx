@@ -19,32 +19,22 @@ const FilterableArticleList = ({ articles, roles }: FilterableArticleListProps) 
   const [selectedRole, setSelectedRole] = useState<string>(initialRole);
 
   useEffect(() => {
+    const initialRoleToFilter = initialRole === "전체" ? null : initialRole;
     const roleToFilter = selectedRole === "전체" ? null : selectedRole;
+    const effectiveRoleToFilter = roleToFilter || initialRoleToFilter;
 
-    if (!roleToFilter) {
+    if (!effectiveRoleToFilter) {
       setFilteredArticles(articles);
     } else {
       setFilteredArticles(
         articles.filter(article =>
-          article.properties.role.multi_select.some((roleObj: any) => roleObj.name === roleToFilter)
+          article.properties.role.multi_select.some(
+            (roleObj: any) => roleObj.name === effectiveRoleToFilter
+          )
         )
       );
     }
-  }, [selectedRole, articles]);
-
-  useEffect(() => {
-    const roleToFilter = initialRole === "전체" ? null : initialRole;
-
-    if (!roleToFilter) {
-      setFilteredArticles(articles);
-    } else {
-      setFilteredArticles(
-        articles.filter(article =>
-          article.properties.role.multi_select.some((roleObj: any) => roleObj.name === roleToFilter)
-        )
-      );
-    }
-  }, [initialRole, articles]);
+  }, [selectedRole, initialRole, articles]);
 
   const handleRoleClick = (role: string) => {
     setSelectedRole(role);
@@ -72,7 +62,7 @@ const FilterableArticleList = ({ articles, roles }: FilterableArticleListProps) 
               borderRadius: "20px",
               display: "inline-flex",
               height: "36px",
-              padding: "7px 23px"
+              padding: "4px 14px"
             }}
           >
             <Text
@@ -91,7 +81,7 @@ const FilterableArticleList = ({ articles, roles }: FilterableArticleListProps) 
         className="responsive-grid"
         style={{ margin: "50px auto 0 auto" }}
         columns="2"
-        gap={"80px"}
+        gap={"60px 10%"}
         rows="repeat(2, 1fr)"
         width="70%"
       >
