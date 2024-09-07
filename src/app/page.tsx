@@ -1,5 +1,5 @@
 import { Box, Grid } from "@radix-ui/themes";
-import { getArticleInfoList, queryNotionDatabase } from "@/api/notion";
+import { getArticleInfoList } from "@/api/notion";
 import { ArticleCard } from "@/components/ArticleCard/ArticleCard";
 
 export default async function Home() {
