@@ -1,7 +1,7 @@
 import { getArticleInfoList } from "@/api/notion";
 import "./page.css";
-import FilterableArticleList from "./FilterableArticleList";
-import Banner from "./Banner";
+import FilterableArticleList from "./_component/main/FilterableArticleList";
+import Banner from "./_component/main/Banner";
 
 export default async function Home() {
   const notionArticles = await getArticleInfoList();

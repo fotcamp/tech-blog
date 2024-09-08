@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Flex, Grid, Text, Button } from "@radix-ui/themes";
-import { Article } from "../api/types";
-import { ArticleCard } from "../components/ArticleCard/ArticleCard";
+import { Article } from "../../../api/types";
+import { ArticleCard } from "../../../components/ArticleCard/ArticleCard";
 
 interface FilterableArticleListProps {
   articles: Article[];
