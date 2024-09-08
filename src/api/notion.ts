@@ -67,7 +67,12 @@ export async function getArticleInfoList(): Promise<Article[]> {
     const itemName = item.properties.name as any;
     const title = itemName.title[0].plain_text;
     const coverImageUrl =
-      item.cover?.type === "file" ? item.cover?.file.url : "/default_cover_image.png";
+      item.cover?.type === "file"
+        ? item.cover?.file.url
+        : item.cover?.type === "external"
+          ? item.cover?.external.url
+          : "/default_cover_image.png";
+
     return {
       pageId: item.id,
       title: title,

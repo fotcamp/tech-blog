@@ -1,0 +1,36 @@
+.section-photo {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .section-photo_one {
+    display: none;
+  }
+  .section-photo {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .responsive-grid {
+    grid-template-columns: 1fr !important;
+    width: 80%;
+  }
+}
+@media (max-width: 1024px) {
+  .responsive-grid {
+    width: 80%;
+  }
+  .responsive-role {
+    width: 80%;
+  }
+  .text_one {
+    font-size: 24px;
+  }
+  .text_two {
+    font-size: 14px;
+  }
+  .img_box {
+    height: 180px;
+  }
+}
