@@ -28,9 +28,7 @@ export default function SearchPage() {
               placeholder="검색어를 입력하세요"
               value={query}
               onChange={e => setQuery(e.target.value)}
-              onKeyDown={e => {
-                if (e.key === "Enter") handleSearch();
-              }}
+              onKeyDown={e => e.key === "Enter" && handleSearch()}
             >
               <TextField.Slot>
                 <MagnifyingGlassIcon color="green" height="16" width="16" />
