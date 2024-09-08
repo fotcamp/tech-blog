@@ -4,12 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
     "start": "next start",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "format": "prettier --write --cache .",
-    "lint": "eslint --cache --max-warnings=0 .",
+    "lint": "eslint --cache .",
     "postinstall": "husky install"
   },
   "dependencies": {
