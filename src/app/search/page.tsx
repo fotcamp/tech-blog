@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AlertDialog, Flex, Button, TextField } from "@radix-ui/themes";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import searchArticle from "@/api/notion.ts";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");

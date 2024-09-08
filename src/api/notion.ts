@@ -116,7 +116,15 @@ export const searchArticle = async (key: string) => {
     const titleList = result.map(item => {
       const itemName = item.properties.name as any;
       const title = itemName.title[0].plain_text;
-      return { pageId: item.id, title };
+      const coverImageUrl =
+        item.cover?.type === "file" ? item.cover?.file.url : "/default_cover_image.png";
+      return {
+        pageId: item.id,
+        title: title,
+        createdAt: new Date(item.created_time),
+        thumbnailUrl: coverImageUrl,
+        properties: item.properties
+      };
     });
 
     console.log(titleList);

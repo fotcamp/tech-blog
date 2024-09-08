@@ -1,16 +1,9 @@
-// app/search/result/page.tsx (서버 컴포넌트)
-import { Heading, Text, Flex, Card } from "@radix-ui/themes";
-import { searchArticle } from "@/api/notion"; // searchArticle 함수 가져오기
-
-// 검색 결과 타입 정의
-type SearchResult = {
-  pageId: string;
-  title: string;
-};
-
-interface SearchResultsPageProps {
-  query: string;
-}
+import { Heading, Text, Flex, Card, Inset, Box } from "@radix-ui/themes";
+import { searchArticle } from "@/api/notion";
+import { getFormatDate } from "@/utils/getFormatDate";
+import Link from "next/link";
+import { Article } from "@/api/types";
+import Image from "next/image";
 
 export default async function SearchResultsPage({ searchParams }: { searchParams: { q: string } }) {
   const query = searchParams.q;
@@ -19,10 +12,9 @@ export default async function SearchResultsPage({ searchParams }: { searchParams
     return <Text>검색어를 입력해주세요.</Text>;
   }
 
-  let results: SearchResult[] = [];
+  let results: Article[] = [];
 
   try {
-    // searchArticle 함수를 사용해 노션에서 검색 결과 가져오기
     results = await searchArticle(query);
   } catch (error) {
     console.error("Error fetching search results:", error);
@@ -31,16 +23,40 @@ export default async function SearchResultsPage({ searchParams }: { searchParams
   return (
     <Flex direction="column" gap="4">
       <Heading size="6">'{query}'에 대한 검색 결과</Heading>
-
-      {results.length > 0 ? (
-        results.map(result => (
-          <Card key={result.pageId}>
-            <Heading size="3">{result.title}</Heading>
-          </Card>
-        ))
-      ) : (
-        <Text>검색 결과가 없습니다.</Text>
-      )}
+      <Flex direction="row" gap="4">
+        {results.length > 0 ? (
+          results.map(result => (
+            <Link key={result.pageId} href={`/posts/${result.pageId}`}>
+              <Box width="240px">
+                <Card size="2">
+                  <Inset clip="padding-box" side="top" pb="current">
+                    <Image
+                      src={result.thumbnailUrl || ""}
+                      alt="article thumnail image"
+                      width={200}
+                      height={200}
+                      style={{
+                        display: "block",
+                        objectFit: "cover",
+                        width: "100%",
+                        height: 140,
+                        backgroundColor: "var(--gray-5)"
+                      }}
+                      priority
+                    />
+                  </Inset>
+                  <Heading size="3">{result.title}</Heading>
+                  <Text as="p" size="3">
+                    {getFormatDate(result.createdAt)}
+                  </Text>
+                </Card>
+              </Box>
+            </Link>
+          ))
+        ) : (
+          <Text>검색 결과가 없습니다.</Text>
+        )}
+      </Flex>
     </Flex>
   );
 }
