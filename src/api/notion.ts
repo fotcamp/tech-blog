@@ -126,8 +126,6 @@ export const searchArticle = async (key: string) => {
         properties: item.properties
       };
     });
-
-    console.log(titleList);
     return titleList;
   } catch (error) {
     console.error("Error in searchArticle function:", error);
