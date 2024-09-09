@@ -88,3 +88,49 @@ export const fetchArticleContent = async (pageId: string) => {
   const mdBlocks = await n2m.pageToMarkdown(pageId);
   return n2m.toMarkdownString(mdBlocks);
 };
+
+export const searchArticle = async (key: string) => {
+  try {
+    const response = await notionClient.databases.query({
+      database_id: process.env.NOTION_DATABASE_ID!,
+      filter: {
+        and: [
+          {
+            property: "exposure",
+            checkbox: {
+              equals: true
+            }
+          },
+          {
+            property: "title",
+            rich_text: {
+              contains: key
+            }
+          }
+        ]
+      }
+    });
+
+    const result = response.results as DatabaseObjectResponse[];
+
+    const titleList = result.map(item => {
+      const itemName = item.properties.name as any;
+      const title = itemName.title[0].plain_text;
+      const coverImageUrl =
+        item.cover?.type === "file" ? item.cover?.file.url : "/default_cover_image.png";
+      return {
+        pageId: item.id,
+        title: title,
+        createdAt: new Date(item.created_time),
+        thumbnailUrl: coverImageUrl,
+        properties: item.properties
+      };
+    });
+
+    console.log(titleList);
+    return titleList;
+  } catch (error) {
+    console.error("Error in searchArticle function:", error);
+    throw new Error("Error in searchArticle function");
+  }
+};
