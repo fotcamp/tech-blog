@@ -1,0 +1,10 @@
+# .next
+.storybook
+.vscode
+.git
+.github
+tests
+.yarn/sdks
+node_modules
+README.md
+commitlint.config.js
