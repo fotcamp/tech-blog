@@ -132,3 +132,27 @@ export const searchArticle = async (key: string) => {
     throw new Error("Error in searchArticle function");
   }
 };
+
+/*
+ * pageId로 title, createdAt, role을 가져오는 함수
+ */
+
+export async function getPostPage(pageId: string) {
+  try {
+    const pageInfo = await getPageInfo(pageId);
+    const itemName = pageInfo.properties.name as any;
+    const title = itemName?.title?.[0]?.plain_text || "제목 없음";
+    const createdAt = new Date(pageInfo.created_time);
+    const roleProperty = pageInfo.properties.role as any;
+    const role =
+      roleProperty?.multi_select?.map((selectItem: any) => selectItem.name).join(", ") || "None";
+    return {
+      title,
+      createdAt,
+      role
+    };
+  } catch (error) {
+    console.error("Error fetching postPage:", error);
+    throw error;
+  }
+}
