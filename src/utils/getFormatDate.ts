@@ -1,8 +1,6 @@
-export const getFormatDate: any = (date: Date) => {
+export const getFormatDate = (date: Date): string => {
   const year = date.getFullYear();
-  let month: string | number = 1 + date.getMonth();
-  month = month >= 10 ? month : "0" + month;
-  let day: string | number = date.getDate();
-  day = day >= 10 ? day : "0" + day;
-  return year + "-" + month + "-" + day;
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 };
