@@ -24,7 +24,7 @@ export default async function PostPage({ params }: { params: { postNo: string } 
         gap={{ initial: "3", md: "4", lg: "6" }}
       >
         <Image
-          src={postInfo.coverImageUrl || ""}
+          src={postInfo.thumbnailUrl || ""}
           alt={`${postInfo.title}의 썸네일 이미지`}
           width={200}
           height={200}

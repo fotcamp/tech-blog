@@ -134,25 +134,45 @@ export const searchArticle = async (key: string) => {
 };
 
 /*
- * pageId로 title, createdAt, role을 가져오는 함수
+ * pageId로 title, createdAt, role, coverImage를 가져오는 함수
  */
+interface PostPage extends Article {
+  role: string;
+}
 
-export async function getPostPage(pageId: string) {
+export async function getPostPage(pageId: string): Promise<PostPage> {
   try {
     const pageInfo = await getPageInfo(pageId);
-    const itemName = pageInfo.properties.name as any;
-    const title = itemName?.title?.[0]?.plain_text || "제목 없음";
+    const nameProperty = pageInfo.properties.name;
+    console.log("nameProperty type:", nameProperty?.type);
+
+    const title =
+      nameProperty?.type === "title" && nameProperty.title?.[0]?.plain_text
+        ? nameProperty.title[0].plain_text
+        : "제목 없음";
+
     const createdAt = new Date(pageInfo.created_time);
-    const roleProperty = pageInfo.properties.role as any;
+
+    const roleProperty = pageInfo.properties.role;
+    console.log("roleProperty type:", roleProperty?.type);
+
     const role =
-      roleProperty?.multi_select?.map((selectItem: any) => selectItem.name).join(", ") || "None";
+      roleProperty?.type === "multi_select" && roleProperty.multi_select
+        ? roleProperty.multi_select.map((selectItem: any) => selectItem.name).join(", ")
+        : "None";
+
     const coverImageUrl =
-      pageInfo.cover?.type === "file" ? pageInfo.cover?.file.url : "/default_cover_image.png";
+      pageInfo.cover?.type === "file" && pageInfo.cover.file
+        ? pageInfo.cover.file.url
+        : "/default_cover_image.png";
+
     return {
+      pageId,
       title,
       createdAt,
-      role,
-      coverImageUrl
+      thumbnailUrl: coverImageUrl,
+      properties: pageInfo.properties,
+      role
     };
   } catch (error) {
     console.error("Error fetching postPage:", error);
