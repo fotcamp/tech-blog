@@ -5,3 +5,8 @@ export interface Article {
   thumbnailUrl: string;
   properties: any;
 }
+export interface MultiSelectOption {
+  id: string;
+  name: string;
+  color: string;
+}

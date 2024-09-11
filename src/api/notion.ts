@@ -5,7 +5,7 @@ import {
 } from "@notionhq/client/build/src/api-endpoints";
 
 import { NotionToMarkdown } from "notion-to-md";
-import { Article } from "./types";
+import { Article, MultiSelectOption } from "./types";
 
 export const notionClient = new Client({
   auth: process.env.NOTION_TOKEN
@@ -144,28 +144,22 @@ export async function getPostPage(pageId: string): Promise<PostPage> {
   try {
     const pageInfo = await getPageInfo(pageId);
     const nameProperty = pageInfo.properties.name;
-    console.log("nameProperty type:", nameProperty?.type);
-
     const title =
       nameProperty?.type === "title" && nameProperty.title?.[0]?.plain_text
         ? nameProperty.title[0].plain_text
         : "제목 없음";
-
     const createdAt = new Date(pageInfo.created_time);
-
     const roleProperty = pageInfo.properties.role;
-    console.log("roleProperty type:", roleProperty?.type);
-
     const role =
       roleProperty?.type === "multi_select" && roleProperty.multi_select
-        ? roleProperty.multi_select.map((selectItem: any) => selectItem.name).join(", ")
+        ? roleProperty.multi_select
+            .map((selectItem: MultiSelectOption) => selectItem.name)
+            .join(", ")
         : "None";
-
     const coverImageUrl =
       pageInfo.cover?.type === "file" && pageInfo.cover.file
         ? pageInfo.cover.file.url
         : "/default_cover_image.png";
-
     return {
       pageId,
       title,
