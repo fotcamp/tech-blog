@@ -5,7 +5,7 @@ import {
 } from "@notionhq/client/build/src/api-endpoints";
 
 import { NotionToMarkdown } from "notion-to-md";
-import { Article } from "./types";
+import { Article, MultiSelectOption } from "./types";
 
 export const notionClient = new Client({
   auth: process.env.NOTION_TOKEN
@@ -126,11 +126,50 @@ export const searchArticle = async (key: string) => {
         properties: item.properties
       };
     });
-
-    console.log(titleList);
     return titleList;
   } catch (error) {
     console.error("Error in searchArticle function:", error);
     throw new Error("Error in searchArticle function");
   }
 };
+
+/*
+ * pageId로 title, createdAt, role, coverImage를 가져오는 함수
+ */
+interface PostPage extends Article {
+  role: string;
+}
+
+export async function getPostPage(pageId: string): Promise<PostPage> {
+  try {
+    const pageInfo = await getPageInfo(pageId);
+    const nameProperty = pageInfo.properties.name;
+    const title =
+      nameProperty?.type === "title" && nameProperty.title?.[0]?.plain_text
+        ? nameProperty.title[0].plain_text
+        : "제목 없음";
+    const createdAt = new Date(pageInfo.created_time);
+    const roleProperty = pageInfo.properties.role;
+    const role =
+      roleProperty?.type === "multi_select" && roleProperty.multi_select
+        ? roleProperty.multi_select
+            .map((selectItem: MultiSelectOption) => selectItem.name)
+            .join(", ")
+        : "None";
+    const coverImageUrl =
+      pageInfo.cover?.type === "file" && pageInfo.cover.file
+        ? pageInfo.cover.file.url
+        : "/default_cover_image.png";
+    return {
+      pageId,
+      title,
+      createdAt,
+      thumbnailUrl: coverImageUrl,
+      properties: pageInfo.properties,
+      role
+    };
+  } catch (error) {
+    console.error("Error fetching postPage:", error);
+    throw error;
+  }
+}
