@@ -146,10 +146,13 @@ export async function getPostPage(pageId: string) {
     const roleProperty = pageInfo.properties.role as any;
     const role =
       roleProperty?.multi_select?.map((selectItem: any) => selectItem.name).join(", ") || "None";
+    const coverImageUrl =
+      pageInfo.cover?.type === "file" ? pageInfo.cover?.file.url : "/default_cover_image.png";
     return {
       title,
       createdAt,
-      role
+      role,
+      coverImageUrl
     };
   } catch (error) {
     console.error("Error fetching postPage:", error);
