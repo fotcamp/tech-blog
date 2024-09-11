@@ -22,7 +22,8 @@ export default async function PostPage({ params }: { params: { postNo: string } 
         direction="column"
         gap={{ initial: "3", md: "4", lg: "6" }}
       >
-        <Heading size={{ initial: "5", md: "6", lg: "7" }}>{postInfo.title}</Heading>
+        <p>이미지</p>
+        <Heading size={{ initial: "7", md: "8", lg: "9" }}>{postInfo.title}</Heading>
         <Heading size="2" color="gray">
           {getFormatDate(postInfo.createdAt)}
         </Heading>
