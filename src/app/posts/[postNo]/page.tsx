@@ -4,6 +4,7 @@ import { Badge, Box, Flex, Heading } from "@radix-ui/themes";
 import { getFormatDate } from "@/utils/getFormatDate";
 import Image from "next/image";
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 
 export async function generateMetadata({
   params
@@ -15,7 +16,12 @@ export async function generateMetadata({
   const imageUrl = postInfo.thumbnailUrl || defaultImageUrl;
   const title = `${postInfo.title}`;
   const description = "FotCamp 기술 블로그";
-  const pageUrl = `https://blog.fin-hub.co.kr/posts/${params.postNo}`;
+
+  const headersList = headers();
+  const host = headersList.get("host") as string;
+  const protocol = headersList.get("x-forwarded-proto") || "http";
+  const origin = `${protocol}://${host}`;
+  const pageUrl = `${origin}/posts/${params.postNo}`;
 
   return {
     title,
