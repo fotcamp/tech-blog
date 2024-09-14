@@ -3,6 +3,52 @@ import { PostRenderer } from "@/components/PostRenderer/PostRenderer";
 import { Badge, Box, Flex, Heading } from "@radix-ui/themes";
 import { getFormatDate } from "@/utils/getFormatDate";
 import Image from "next/image";
+import type { Metadata } from "next";
+import { headers } from "next/headers";
+
+export async function generateMetadata({
+  params
+}: {
+  params: { postNo: string };
+}): Promise<Metadata> {
+  const postInfo = await getPostPage(params.postNo);
+  const defaultImageUrl = "https://blog.fin-hub.co.kr/default_cover_image.png";
+  const imageUrl = postInfo.thumbnailUrl || defaultImageUrl;
+  const title = `${postInfo.title}`;
+  const description = "FotCamp 기술 블로그";
+
+  const headersList = headers();
+  const host = headersList.get("host") as string;
+  const protocol = headersList.get("x-forwarded-proto") || "http";
+  const origin = `${protocol}://${host}`;
+  const pageUrl = `${origin}/posts/${params.postNo}`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: pageUrl,
+      siteName: "FotCamp 기술 블로그",
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: postInfo.title
+        }
+      ],
+      type: "article"
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [imageUrl]
+    }
+  };
+}
 
 export default async function PostPage({ params }: { params: { postNo: string } }) {
   const pageId = params.postNo;
