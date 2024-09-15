@@ -23,12 +23,10 @@ export const n2m = new NotionToMarkdown({
 export async function incrementPageView(pageId: string): Promise<number> {
   const page = (await notionClient.pages.retrieve({ page_id: pageId })) as PageObjectResponse;
 
-  // 먼저 properties를 unknown으로 캐스팅한 후 PageProperties로 변환
   const properties = page.properties as unknown as PageProperties;
 
-  const views = properties.views.number || 0; // 조회수가 null일 경우 0으로 처리
+  const views = properties.views.number || 0;
 
-  // 조회수를 1 증가시켜 업데이트
   await notionClient.pages.update({
     page_id: pageId,
     properties: {
@@ -38,7 +36,7 @@ export async function incrementPageView(pageId: string): Promise<number> {
     }
   });
 
-  return views + 1; // 업데이트된 조회수 반환
+  return views + 1;
 }
 
 /**
