@@ -4,7 +4,7 @@ import {
   PageObjectResponse
 } from "@notionhq/client/build/src/api-endpoints";
 import { NotionToMarkdown } from "notion-to-md";
-import { Article, MultiSelectOption } from "./types";
+import { Article, MultiSelectOption, PageProperties } from "./types";
 
 export const notionClient = new Client({
   auth: process.env.NOTION_TOKEN
@@ -21,32 +21,24 @@ export const n2m = new NotionToMarkdown({
  * 조회수를 증가시키는 함수
  */
 export async function incrementPageView(pageId: string): Promise<number> {
-  const page: any = await notionClient.pages.retrieve({ page_id: pageId });
+  const page = (await notionClient.pages.retrieve({ page_id: pageId })) as PageObjectResponse;
 
-  console.log(
-    `-------------------Page Data-------------------
-    `,
-    JSON.stringify(page, null, 2)
-  );
+  // 먼저 properties를 unknown으로 캐스팅한 후 PageProperties로 변환
+  const properties = page.properties as unknown as PageProperties;
 
-  // 'views' 속성이 존재하고 number 타입인 경우 조회수 증가
-  if (page.properties.views) {
-    const views = page.properties.views.number || 0;
+  const views = properties.views.number || 0; // 조회수가 null일 경우 0으로 처리
 
-    // 조회수를 1 증가시켜 업데이트
-    await notionClient.pages.update({
-      page_id: pageId,
-      properties: {
-        views: {
-          number: views + 1
-        }
+  // 조회수를 1 증가시켜 업데이트
+  await notionClient.pages.update({
+    page_id: pageId,
+    properties: {
+      views: {
+        number: views + 1
       }
-    });
+    }
+  });
 
-    return views + 1;
-  } else {
-    throw new Error("views 필드를 찾을 수 없습니다.");
-  }
+  return views + 1; // 업데이트된 조회수 반환
 }
 
 /**

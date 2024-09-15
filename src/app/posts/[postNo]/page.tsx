@@ -54,7 +54,7 @@ export default async function PostPage({ params }: { params: { postNo: string } 
   const pageId = params.postNo;
   const content = await fetchArticleContent(pageId);
   const postInfo = await getPostPage(pageId);
-  incrementPageView(pageId);
+  const updatedViews = await incrementPageView(pageId);
 
   return (
     <Flex
@@ -70,6 +70,9 @@ export default async function PostPage({ params }: { params: { postNo: string } 
         direction="column"
         gap={{ initial: "3", md: "4", lg: "6" }}
       >
+        <Heading size="2" color="gray">
+          조회수: {updatedViews}
+        </Heading>
         <Image
           src={postInfo.thumbnailUrl || ""}
           alt={`${postInfo.title}의 썸네일 이미지`}

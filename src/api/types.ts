@@ -10,3 +10,11 @@ export interface MultiSelectOption {
   name: string;
   color: string;
 }
+
+export interface PageProperties {
+  views: {
+    id: string;
+    type: "number";
+    number: number | null;
+  };
+}
