@@ -1,4 +1,4 @@
-import { fetchArticleContent, getPostPage } from "@/api/notion";
+import { fetchArticleContent, getPostPage, incrementPageView } from "@/api/notion";
 import { PostRenderer } from "@/components/PostRenderer/PostRenderer";
 import { Badge, Box, Flex, Heading } from "@radix-ui/themes";
 import { getFormatDate } from "@/utils/getFormatDate";
@@ -54,6 +54,7 @@ export default async function PostPage({ params }: { params: { postNo: string } 
   const pageId = params.postNo;
   const content = await fetchArticleContent(pageId);
   const postInfo = await getPostPage(pageId);
+  incrementPageView(pageId);
 
   return (
     <Flex

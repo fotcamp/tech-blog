@@ -3,7 +3,6 @@ import {
   DatabaseObjectResponse,
   PageObjectResponse
 } from "@notionhq/client/build/src/api-endpoints";
-
 import { NotionToMarkdown } from "notion-to-md";
 import { Article, MultiSelectOption } from "./types";
 
@@ -17,6 +16,38 @@ export const n2m = new NotionToMarkdown({
     parseChildPages: false
   }
 });
+
+/**
+ * 조회수를 증가시키는 함수
+ */
+export async function incrementPageView(pageId: string): Promise<number> {
+  const page: any = await notionClient.pages.retrieve({ page_id: pageId });
+
+  console.log(
+    `-------------------Page Data-------------------
+    `,
+    JSON.stringify(page, null, 2)
+  );
+
+  // 'views' 속성이 존재하고 number 타입인 경우 조회수 증가
+  if (page.properties.views) {
+    const views = page.properties.views.number || 0;
+
+    // 조회수를 1 증가시켜 업데이트
+    await notionClient.pages.update({
+      page_id: pageId,
+      properties: {
+        views: {
+          number: views + 1
+        }
+      }
+    });
+
+    return views + 1;
+  } else {
+    throw new Error("views 필드를 찾을 수 없습니다.");
+  }
+}
 
 /**
  * get notion database
