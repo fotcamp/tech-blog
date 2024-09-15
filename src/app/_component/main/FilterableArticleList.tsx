@@ -17,24 +17,27 @@ const FilterableArticleList = ({ articles, roles }: FilterableArticleListProps) 
 
   const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
   const [selectedRole, setSelectedRole] = useState<string>(initialRole);
+  const [visibleCount, setVisibleCount] = useState<number>(6);
 
   useEffect(() => {
     const initialRoleToFilter = initialRole === "전체" ? null : initialRole;
     const roleToFilter = selectedRole === "전체" ? null : selectedRole;
     const effectiveRoleToFilter = roleToFilter || initialRoleToFilter;
 
-    if (!effectiveRoleToFilter) {
-      setFilteredArticles(articles);
-    } else {
-      setFilteredArticles(
-        articles.filter(article =>
+    const filtered = !effectiveRoleToFilter
+      ? articles
+      : articles.filter(article =>
           article.properties.role.multi_select.some(
             (roleObj: any) => roleObj.name === effectiveRoleToFilter
           )
-        )
-      );
-    }
+        );
+
+    setFilteredArticles(filtered);
   }, [selectedRole, initialRole, articles]);
+
+  const handleLoadMore = () => {
+    setVisibleCount(prevCount => prevCount + 4);
+  };
 
   const handleRoleClick = (role: string) => {
     setSelectedRole(role);
@@ -84,8 +87,9 @@ const FilterableArticleList = ({ articles, roles }: FilterableArticleListProps) 
         gap={"60px 10%"}
         rows="repeat(2, 1fr)"
         width="70%"
+        pb={"100px"}
       >
-        {filteredArticles.map(item => (
+        {filteredArticles.slice(0, visibleCount).map(item => (
           <ArticleCard
             key={item.pageId}
             pageId={item.pageId}
@@ -96,6 +100,31 @@ const FilterableArticleList = ({ articles, roles }: FilterableArticleListProps) 
           />
         ))}
       </Grid>
+      {visibleCount < filteredArticles.length && (
+        <Button
+          onClick={handleLoadMore}
+          style={{
+            borderRadius: "30px",
+            margin: "0px auto 50px auto",
+            backgroundColor: "#E6E8EB",
+            display: "block",
+            height: "40px",
+            width: "150px",
+            padding: "4px 14px"
+          }}
+        >
+          <Text
+            style={{
+              color: "#7B8287",
+              fontFamily: "Pretendard Variable",
+              fontSize: "14px",
+              fontWeight: 600
+            }}
+          >
+            게시글 더보기 +
+          </Text>
+        </Button>
+      )}
     </>
   );
 };

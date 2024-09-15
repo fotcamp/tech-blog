@@ -60,18 +60,23 @@ export async function getPageInfo(pageId: string): Promise<PageObjectResponse> {
 /**
  * get article info list from database
  */
+const getCoverImageUrl = (item: DatabaseObjectResponse): string => {
+  if (item.cover?.type === "file") {
+    return item.cover?.file.url;
+  } else if (item.cover?.type === "external") {
+    return item.cover?.external.url;
+  } else {
+    return "/default_cover_image.png";
+  }
+};
+
 export async function getArticleInfoList(): Promise<Article[]> {
   const database = await queryNotionDatabase();
 
   const articleList = database.map(item => {
     const itemName = item.properties.name as any;
     const title = itemName.title[0].plain_text;
-    const coverImageUrl =
-      item.cover?.type === "file"
-        ? item.cover?.file.url
-        : item.cover?.type === "external"
-          ? item.cover?.external.url
-          : "/default_cover_image.png";
+    const coverImageUrl = getCoverImageUrl(item);
 
     return {
       pageId: item.id,

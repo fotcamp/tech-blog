@@ -1,13 +1,17 @@
 import { Box, Flex, Text } from "@radix-ui/themes";
+import Image from "next/image";
 
 export default function Banner() {
   return (
     <Box mx={"30px"} mt={"80px"} mb={"7%"}>
-      <img
+      <Image
         className="section-photo"
         src="/img.svg"
         alt="img"
-        width={"100%"}
+        layout="responsive"
+        width={100}
+        height={100}
+        objectFit="contain"
         style={{ maxHeight: "500px", borderRadius: "30px" }}
       />
       <Flex
@@ -38,9 +42,8 @@ export default function Banner() {
           >
             더 쉽게 금융{"\n"}지식을 쌓자!
           </Text>
-          <img src="/finhub_logo.png" alt="logo" width={225} height={50} />
+          <Image src="/finhub_logo.png" alt="logo" width={225} height={50} />
         </Flex>
-        <img src="/iphone.svg" alt="iphone" style={{ zIndex: "1" }} />
         <Box
           width={"666px"}
           height={"666px"}
