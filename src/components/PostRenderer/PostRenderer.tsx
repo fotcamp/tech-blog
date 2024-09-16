@@ -2,9 +2,7 @@ import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-import rehypeSlug from "rehype-slug";
 import rehypeHighlight from "rehype-highlight";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import "highlight.js/styles/github.css";
 import "./mark-down-style.css";
 import { BlockQuote, CodeBlock, Anchor, Paragraph, Callout, IndexList } from "./components";
@@ -40,19 +38,7 @@ export const PostRenderer = ({ content }: { content: string }) => {
       <IndexList content={content} />
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
-        rehypePlugins={[
-          rehypeRaw,
-          rehypeHighlight,
-          rehypeSlug,
-          [
-            rehypeAutolinkHeadings,
-            {
-              properties: {
-                className: ["anchor"]
-              }
-            }
-          ]
-        ]}
+        rehypePlugins={[rehypeRaw, rehypeHighlight]}
         components={{
           img: ({ node, ...props }) => (
             <Image
