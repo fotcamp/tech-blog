@@ -86,8 +86,25 @@ export async function getArticleInfoList(): Promise<Article[]> {
  */
 export const fetchArticleContent = async (pageId: string) => {
   const mdBlocks = await n2m.pageToMarkdown(pageId);
-  return n2m.toMarkdownString(mdBlocks);
+  const customizedMdBlocks = customizeMdBlocks(mdBlocks);
+  return n2m.toMarkdownString(customizedMdBlocks);
 };
+
+function customizeMdBlocks(blocks: any[]) {
+  return blocks.map(block => {
+    if (block.type === "callout") {
+      const content = block.parent.replace(/>\s*(\S+)\s*/, "").trim();
+      const newContent = `> [callout] ${content}`;
+
+      return {
+        ...block,
+        type: "blockquote",
+        parent: newContent
+      };
+    }
+    return block;
+  });
+}
 
 export const searchArticle = async (key: string) => {
   try {
