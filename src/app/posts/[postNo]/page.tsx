@@ -52,9 +52,9 @@ export async function generateMetadata({
 
 export default async function PostPage({ params }: { params: { postNo: string } }) {
   const pageId = params.postNo;
-  const content = await fetchArticleContent(pageId);
   const postInfo = await getPostPage(pageId);
-  const updatedViews = await incrementPageView(pageId);
+  const content = await fetchArticleContent(pageId);
+  const updatedViews = await incrementPageView(pageId, postInfo.properties.views?.number ?? 0);
 
   return (
     <Flex

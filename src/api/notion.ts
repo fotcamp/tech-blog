@@ -20,23 +20,22 @@ export const n2m = new NotionToMarkdown({
 /**
  * 조회수를 증가시키는 함수
  */
-export async function incrementPageView(pageId: string): Promise<number> {
-  const page = (await notionClient.pages.retrieve({ page_id: pageId })) as PageObjectResponse;
-
-  const properties = page.properties as unknown as PageProperties;
-
-  const views = properties.views.number || 0;
+export async function incrementPageView(
+  pageId: string,
+  currentViews: number | null
+): Promise<number> {
+  const updatedViews = (currentViews ?? 0) + 1;
 
   await notionClient.pages.update({
     page_id: pageId,
     properties: {
       views: {
-        number: views + 1
+        number: updatedViews
       }
     }
   });
 
-  return views + 1;
+  return updatedViews;
 }
 
 /**
