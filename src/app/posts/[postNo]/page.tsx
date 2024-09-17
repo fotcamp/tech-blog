@@ -5,6 +5,7 @@ import { getFormatDate } from "@/utils/getFormatDate";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
+import GiscusBlock from "@/components/GiscusBlock/GiscusBlock";
 
 export async function generateMetadata({
   params
@@ -88,6 +89,7 @@ export default async function PostPage({ params }: { params: { postNo: string } 
         </Box>
         <PostRenderer content={content.parent} />
       </Flex>
+      <GiscusBlock />
     </Flex>
   );
 }
