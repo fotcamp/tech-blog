@@ -6,6 +6,7 @@ import {
 
 import { NotionToMarkdown } from "notion-to-md";
 import { Article, MultiSelectOption } from "./types";
+import { convertImageUrl } from "./s3Image";
 
 export const notionClient = new Client({
   auth: process.env.NOTION_TOKEN
@@ -63,19 +64,25 @@ export async function getPageInfo(pageId: string): Promise<PageObjectResponse> {
 export async function getArticleInfoList(): Promise<Article[]> {
   const database = await queryNotionDatabase();
 
-  const articleList = database.map(item => {
-    const itemName = item.properties.name as any;
-    const title = itemName.title[0].plain_text;
-    const coverImageUrl =
-      item.cover?.type === "file" ? item.cover?.file.url : "/default_cover_image.png";
-    return {
-      pageId: item.id,
-      title: title,
-      createdAt: new Date(item.created_time),
-      thumbnailUrl: coverImageUrl,
-      properties: item.properties
-    };
-  });
+  const articleList = await Promise.all(
+    database.map(async item => {
+      const itemName = item.properties.name as any;
+      const title = itemName.title[0].plain_text;
+      let coverImageUrl = "/default_cover_image.png";
+
+      if (item.cover?.type === "file") {
+        coverImageUrl = await convertImageUrl(item.cover.file.url);
+      }
+
+      return {
+        pageId: item.id,
+        title: title,
+        createdAt: new Date(item.created_time),
+        thumbnailUrl: coverImageUrl,
+        properties: item.properties
+      };
+    })
+  );
 
   return articleList as Article[];
 }
@@ -86,7 +93,25 @@ export async function getArticleInfoList(): Promise<Article[]> {
  */
 export const fetchArticleContent = async (pageId: string) => {
   const mdBlocks = await n2m.pageToMarkdown(pageId);
-  return n2m.toMarkdownString(mdBlocks);
+
+  const convertedMdBlocks = await Promise.all(
+    mdBlocks.map(async block => {
+      if (block.type === "image") {
+        const imageUrlMatch = block.parent.match(/\((https:\/\/.*?)\)/);
+        if (
+          imageUrlMatch &&
+          imageUrlMatch[1].includes("prod-files-secure.s3.us-west-2.amazonaws.com")
+        ) {
+          const originalUrl = imageUrlMatch[1];
+          const convertedUrl = await convertImageUrl(originalUrl);
+          block.parent = block.parent.replace(originalUrl, convertedUrl);
+        }
+      }
+      return block;
+    })
+  );
+
+  return n2m.toMarkdownString(convertedMdBlocks);
 };
 
 export const searchArticle = async (key: string) => {
@@ -113,11 +138,15 @@ export const searchArticle = async (key: string) => {
 
     const result = response.results as DatabaseObjectResponse[];
 
-    const titleList = result.map(item => {
+    const titleList = result.map(async item => {
       const itemName = item.properties.name as any;
       const title = itemName.title[0].plain_text;
-      const coverImageUrl =
-        item.cover?.type === "file" ? item.cover?.file.url : "/default_cover_image.png";
+      let coverImageUrl = "/default_cover_image.png";
+
+      if (item.cover?.type === "file") {
+        coverImageUrl = await convertImageUrl(item.cover.file.url);
+      }
+
       return {
         pageId: item.id,
         title: title,
@@ -156,10 +185,11 @@ export async function getPostPage(pageId: string): Promise<PostPage> {
             .map((selectItem: MultiSelectOption) => selectItem.name)
             .join(", ")
         : "None";
-    const coverImageUrl =
-      pageInfo.cover?.type === "file" && pageInfo.cover.file
-        ? pageInfo.cover.file.url
-        : "/default_cover_image.png";
+    let coverImageUrl = "/default_cover_image.png";
+    if (pageInfo.cover?.type === "file") {
+      coverImageUrl = await convertImageUrl(pageInfo.cover.file.url);
+    }
+
     return {
       pageId,
       title,
