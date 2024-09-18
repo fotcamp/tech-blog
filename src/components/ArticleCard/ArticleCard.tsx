@@ -14,8 +14,8 @@ export const ArticleCard = ({
 }: ArticleCardProps) => {
   const roles = properties.role.multi_select;
   return (
-    <Link href={`/posts/${pageId}`}>
-      <Box>
+    <Link href={`/posts/${pageId}`} underline="none">
+      <Box className="article_box">
         <Flex direction="column">
           <Box
             className="img_box"
@@ -30,6 +30,7 @@ export const ArticleCard = ({
               alt="article thumnail image"
               layout={"fill"}
               objectFit={"cover"}
+              className="thumbnail"
             />
           </Box>
           <Text
@@ -43,8 +44,10 @@ export const ArticleCard = ({
           >
             {title}
           </Text>
-          {/* <Text>{createdAt.toISOString()}</Text> */}
-          <Box mt={"20px"}>
+          <Text size="1" mt="2" style={{ color: "#7B8287" }}>
+            {createdAt.toISOString().slice(0, 10)}
+          </Text>
+          <Box mt={"15px"}>
             {roles.map((role: any, index: number) => (
               <Box
                 key={index}

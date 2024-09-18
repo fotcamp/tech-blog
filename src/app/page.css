@@ -1,14 +1,8 @@
-.section-photo {
-  display: none;
-}
-
-@media (max-width: 1024px) {
-  .section-photo_one {
-    display: none;
-  }
-  .section-photo {
-    display: block;
-  }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: "hidden";
 }
 
 @media (max-width: 768px) {
@@ -33,4 +27,9 @@
   .img_box {
     height: 180px;
   }
+}
+
+.article_box:hover .thumbnail {
+  transform: scale(1.2);
+  transition: transform 0.4s;
 }

@@ -3,60 +3,27 @@ import Image from "next/image";
 
 export default function Banner() {
   return (
-    <Box mx={"30px"} mt={"80px"} mb={"7%"}>
-      <Image
-        className="section-photo"
-        src="/img.svg"
-        alt="img"
-        layout="responsive"
-        width={100}
-        height={100}
-        objectFit="contain"
-        style={{ maxHeight: "500px", borderRadius: "30px" }}
-      />
+    <Flex
+      direction={"column"}
+      position={"relative"}
+      style={{ width: "100%", margin: "0 auto 70px auto" }}
+    >
+      <Box style={{ position: "relative", width: "100%", height: "300px" }}>
+        <Image
+          src="/img.svg"
+          alt="img"
+          fill
+          sizes="(max-width: 768px) 100vw, 500px"
+          style={{ objectFit: "contain", borderRadius: "30px" }}
+        />
+      </Box>
       <Flex
-        className="section-photo_one"
-        pl={"60px"}
-        pt={"60px"}
-        direction={"row"}
-        width={"100%"}
-        height={"350px"}
-        style={{
-          backgroundColor: "#50BF50",
-          position: "relative",
-          overflow: "hidden",
-          justifyContent: "space-between",
-          borderRadius: "30px"
-        }}
+        direction={"column"}
+        mt={"30px"}
+        align={"center"}
+        gap={"15px"}
+        style={{ width: "100%" }}
       >
-        <Flex direction={"column"} gap={"50px"}>
-          <Text
-            size={"8"}
-            style={{
-              color: "#FFF",
-              fontFamily: "GmarketSansTTF",
-              whiteSpace: "pre-line",
-              lineHeight: "1.2",
-              transform: "scaleY(0.9)"
-            }}
-          >
-            더 쉽게 금융{"\n"}지식을 쌓자!
-          </Text>
-          <Image src="/finhub_logo.png" alt="logo" width={225} height={50} />
-        </Flex>
-        <Box
-          width={"666px"}
-          height={"666px"}
-          style={{
-            borderRadius: "666px",
-            background: "#38B238",
-            position: "absolute",
-            right: "-250px",
-            top: "-15%"
-          }}
-        ></Box>
-      </Flex>
-      <Flex direction={"column"} mt={"30px"} align={"center"} gap={"15px"}>
         <Text
           className="text_one"
           size={"7"}
@@ -76,6 +43,6 @@ export default function Banner() {
           어렵고 딱딱한 금융 지식을 말랑하게 풀어줄 핀허브
         </Text>
       </Flex>
-    </Box>
+    </Flex>
   );
 }

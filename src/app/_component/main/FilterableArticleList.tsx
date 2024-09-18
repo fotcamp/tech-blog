@@ -17,7 +17,7 @@ const FilterableArticleList = ({ articles, roles }: FilterableArticleListProps) 
 
   const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
   const [selectedRole, setSelectedRole] = useState<string>(initialRole);
-  const [visibleCount, setVisibleCount] = useState<number>(6);
+  const [visibleCount, setVisibleCount] = useState<number>(4);
 
   useEffect(() => {
     const initialRoleToFilter = initialRole === "전체" ? null : initialRole;
@@ -54,25 +54,26 @@ const FilterableArticleList = ({ articles, roles }: FilterableArticleListProps) 
         className="responsive-role"
         style={{ margin: "0 auto" }}
         width="70%"
-        gap={"4"}
+        gap="4"
       >
         {roles.map((role, index) => (
           <Button
             key={index}
             onClick={() => handleRoleClick(role)}
+            radius="full"
             style={{
               backgroundColor: selectedRole === role ? "#25292C" : "#E6E8EB",
-              borderRadius: "20px",
               display: "inline-flex",
               height: "36px",
-              padding: "4px 14px"
+              padding: "4px 14px",
+              cursor: "pointer"
             }}
           >
             <Text
+              size="3"
+              weight="regular"
               style={{
-                color: selectedRole === role ? "#FFFFFF" : "#7B8287",
-                fontSize: "14px",
-                fontWeight: "400"
+                color: selectedRole === role ? "#FFFFFF" : "#7B8287"
               }}
             >
               {role}
@@ -82,12 +83,12 @@ const FilterableArticleList = ({ articles, roles }: FilterableArticleListProps) 
       </Flex>
       <Grid
         className="responsive-grid"
-        style={{ margin: "50px auto 0 auto" }}
         columns="2"
-        gap={"60px 10%"}
+        gap="60px 10%"
         rows="repeat(2, 1fr)"
         width="70%"
-        pb={"100px"}
+        pb="100px"
+        style={{ margin: "50px auto 0 auto" }}
       >
         {filteredArticles.slice(0, visibleCount).map(item => (
           <ArticleCard
@@ -103,22 +104,23 @@ const FilterableArticleList = ({ articles, roles }: FilterableArticleListProps) 
       {visibleCount < filteredArticles.length && (
         <Button
           onClick={handleLoadMore}
+          radius="full"
           style={{
-            borderRadius: "30px",
-            margin: "0px auto 50px auto",
+            margin: "0px auto",
             backgroundColor: "#E6E8EB",
             display: "block",
-            height: "40px",
-            width: "150px",
-            padding: "4px 14px"
+            height: "50px",
+            width: "170px",
+            padding: "4px 14px",
+            cursor: "pointer"
           }}
         >
           <Text
+            size="3"
+            weight="regular"
             style={{
               color: "#7B8287",
-              fontFamily: "Pretendard Variable",
-              fontSize: "14px",
-              fontWeight: 600
+              fontFamily: "Pretendard Variable"
             }}
           >
             게시글 더보기 +

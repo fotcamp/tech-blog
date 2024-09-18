@@ -1,11 +1,10 @@
 "use client";
 
-import * as React from "react";
 import { useTheme } from "next-themes";
 import { Button } from "@radix-ui/themes";
 import Image from "next/image";
 import { Link } from "@radix-ui/themes";
-import { Box, Flex, Text, Strong } from "@radix-ui/themes";
+import { Flex, Strong } from "@radix-ui/themes";
 import "./NavBar.css";
 
 export function NavBar() {
@@ -14,17 +13,27 @@ export function NavBar() {
 
   return (
     <>
-      {/* Your code for the navbar */}
-      {/* <Button onClick={toggleMode}> Toggle mode </Button> */}
-      <header>
-        <Link href="/" underline="none">
-          <Flex align="center" gap="20px">
-            <Image src="/app_icon.svg" alt="app_icon" width={48} height={48} />
-            <p style={{ color: "black" }}>
+      <header className="navBar">
+        <Flex align="center" width={"100%"} justify={"between"}>
+          <Link
+            href="/"
+            underline="none"
+            style={{ display: "flex", alignItems: "center", gap: "4px" }}
+          >
+            <div style={{ position: "relative", width: "48px", height: "48px" }}>
+              <Image src="/app_icon.svg" alt="app_icon" fill style={{ objectFit: "contain" }} />
+            </div>
+            <span style={{ color: "black" }}>
               <Strong>fotcamp </Strong>tech
-            </p>
+            </span>
+          </Link>
+          <Flex align="center" gap="20px">
+            <Link href="/search" underline="none" style={{ width: 32, height: 32 }}>
+              <Image src="/search.svg" alt="search" width={32} height={32}></Image>
+            </Link>
+            <Button onClick={toggleMode}> Toggle mode </Button>
           </Flex>
-        </Link>
+        </Flex>
       </header>
     </>
   );
