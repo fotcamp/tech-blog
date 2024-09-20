@@ -1,24 +1,23 @@
-import { Box, Grid } from "@radix-ui/themes";
 import { getArticleInfoList } from "@/api/notion";
-import { ArticleCard } from "@/components/ArticleCard/ArticleCard";
+import "./page.css";
+import FilterableArticleList from "./_component/main/FilterableArticleList";
+import Banner from "./_component/main/Banner";
 
 export default async function Home() {
   const notionArticles = await getArticleInfoList();
+  const allRoles = Array.from(
+    new Set(
+      notionArticles.flatMap(article =>
+        article.properties.role.multi_select.map((role: any) => role.name)
+      )
+    )
+  );
+  const roles = ["전체", ...allRoles];
+
   return (
     <>
-      <Box>Tech Blog Main Page</Box>
-      <Grid columns="3" gap="3" rows="repeat(2, 1fr)" width="auto">
-        {notionArticles.map(item => (
-          <ArticleCard
-            key={item.pageId}
-            pageId={item.pageId}
-            createdAt={item.createdAt}
-            title={item.title}
-            thumbnailUrl={item.thumbnailUrl}
-            properties={item.properties}
-          />
-        ))}
-      </Grid>
+      <Banner />
+      <FilterableArticleList articles={notionArticles} roles={roles} />
     </>
   );
 }
