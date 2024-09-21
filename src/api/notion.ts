@@ -3,9 +3,8 @@ import {
   DatabaseObjectResponse,
   PageObjectResponse
 } from "@notionhq/client/build/src/api-endpoints";
-
 import { NotionToMarkdown } from "notion-to-md";
-import { Article, MultiSelectOption } from "./types";
+import { Article, MultiSelectOption, PageProperties } from "./types";
 
 export const notionClient = new Client({
   auth: process.env.NOTION_TOKEN
@@ -17,6 +16,27 @@ export const n2m = new NotionToMarkdown({
     parseChildPages: false
   }
 });
+
+/**
+ * 조회수를 증가시키는 함수
+ */
+export async function incrementPageView(
+  pageId: string,
+  currentViews: number | null
+): Promise<number> {
+  const updatedViews = (currentViews ?? 0) + 1;
+
+  await notionClient.pages.update({
+    page_id: pageId,
+    properties: {
+      views: {
+        number: updatedViews
+      }
+    }
+  });
+
+  return updatedViews;
+}
 
 /**
  * get notion database
