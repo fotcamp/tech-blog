@@ -27,7 +27,7 @@ const FilterableArticleList = ({ articles, roles }: FilterableArticleListProps) 
     const filtered = !effectiveRoleToFilter
       ? articles
       : articles.filter(article =>
-          article.properties.role.multi_select.some(
+          article.properties.role?.multi_select.some(
             (roleObj: any) => roleObj.name === effectiveRoleToFilter
           )
         );

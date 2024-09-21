@@ -2,13 +2,14 @@ import { getArticleInfoList } from "@/api/notion";
 import "./page.css";
 import FilterableArticleList from "./_component/main/FilterableArticleList";
 import Banner from "./_component/main/Banner";
+import { Suspense } from "react";
 
 export default async function Home() {
   const notionArticles = await getArticleInfoList();
   const allRoles = Array.from(
     new Set(
       notionArticles.flatMap(article =>
-        article.properties.role.multi_select.map((role: any) => role.name)
+        article.properties.role?.multi_select.map((role: any) => role.name)
       )
     )
   );
@@ -17,7 +18,9 @@ export default async function Home() {
   return (
     <>
       <Banner />
-      <FilterableArticleList articles={notionArticles} roles={roles} />
+      <Suspense>
+        <FilterableArticleList articles={notionArticles} roles={roles} />
+      </Suspense>
     </>
   );
 }
