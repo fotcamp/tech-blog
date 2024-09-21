@@ -8,7 +8,7 @@ export default async function Home() {
   const allRoles = Array.from(
     new Set(
       notionArticles.flatMap(article =>
-        article.properties.role.multi_select.map((role: any) => role.name)
+        article.properties.role?.multi_select.map((role: any) => role.name)
       )
     )
   );
