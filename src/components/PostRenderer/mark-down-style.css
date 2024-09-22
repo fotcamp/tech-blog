@@ -2,4 +2,48 @@
   padding: var(--space-1);
   background-color: var(--accent-3);
   border-radius: var(--radius-1);
+  font-size: var(--font-size-2);
+  background-color: #f3fcf2;
+  color: #50bf50;
+}
+
+pre > .code-block {
+  display: block;
+  padding: var(--space-5);
+  color: var(--gray-12);
+  border-radius: var(--radius-5);
+  overflow: auto;
+}
+
+.paragraph {
+  padding: var(--space-1);
+  color: var(--gray-12);
+}
+
+.block-quote {
+  border-left: 4px solid #c0f5b8;
+}
+
+.block-quote > p {
+  color: #7b8287;
+}
+
+.callout {
+  position: relative;
+  background-color: #edf0f3;
+  border-radius: var(--radius-5);
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-5);
+  padding-right: var(--space-5);
+  padding-left: calc(var(--space-5) + 36px);
+}
+
+.callout::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  background-image: url("/icon/callout-icon.svg");
+  left: 24px;
+  top: 27px;
 }
