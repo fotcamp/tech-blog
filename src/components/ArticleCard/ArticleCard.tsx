@@ -12,7 +12,7 @@ export const ArticleCard = ({
   thumbnailUrl,
   properties
 }: ArticleCardProps) => {
-  const roles = properties.role?.multi_select;
+  const roles = properties.role.multi_select;
   return (
     <Link href={`/posts/${pageId}`} underline="none">
       <Box className="article_box">
@@ -48,7 +48,7 @@ export const ArticleCard = ({
             {createdAt.toISOString().slice(0, 10)}
           </Text>
           <Box mt={"15px"}>
-            {roles?.map((role: any, index: number) => (
+            {roles.map((role: any, index: number) => (
               <Box
                 key={index}
                 p={"7px 14px"}
