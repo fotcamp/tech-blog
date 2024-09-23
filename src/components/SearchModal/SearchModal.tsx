@@ -6,18 +6,22 @@ import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
 export default function SearchModal() {
   const [query, setQuery] = useState("");
+  const [open, setOpen] = useState(false);
   const router = useRouter();
 
   const handleSearch = () => {
-    if (query.trim()) {
+    if (query) {
       router.push(`/search/result?q=${encodeURIComponent(query)}`);
+      setOpen(false);
+      console.log(query);
     }
+    setQuery("");
   };
 
   return (
     <>
-      <AlertDialog.Root>
-        <AlertDialog.Trigger>
+      <AlertDialog.Root open={open} onOpenChange={setOpen}>
+        <AlertDialog.Trigger onClick={() => setOpen(true)}>
           <MagnifyingGlassIcon color="green" width="32" height="32" />
         </AlertDialog.Trigger>
         <AlertDialog.Content maxWidth="450px">
@@ -39,7 +43,7 @@ export default function SearchModal() {
           </TextField.Root>
           <Flex gap="3" mt="4" justify="end">
             <AlertDialog.Cancel>
-              <Button variant="soft" color="gray">
+              <Button variant="soft" color="gray" onClick={() => setOpen(false)}>
                 돌아가기
               </Button>
             </AlertDialog.Cancel>
