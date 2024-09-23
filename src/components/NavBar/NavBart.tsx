@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Link } from "@radix-ui/themes";
 import { Flex, Strong } from "@radix-ui/themes";
 import "./NavBar.css";
+import SearchModal from "../SearchModal/SearchModal";
 
 export function NavBar() {
   const { theme, setTheme } = useTheme();
@@ -28,9 +29,7 @@ export function NavBar() {
             </span>
           </Link>
           <Flex align="center" gap="20px">
-            <Link href="/search" underline="none" style={{ width: 32, height: 32 }}>
-              <Image src="/search.svg" alt="search" width={32} height={32}></Image>
-            </Link>
+            <SearchModal />
             <Button onClick={toggleMode}> Toggle mode </Button>
           </Flex>
         </Flex>
