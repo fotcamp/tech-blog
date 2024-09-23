@@ -6,16 +6,16 @@ import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
 export default function SearchModal() {
   const [query, setQuery] = useState("");
+  const [isComposing, setIsComposing] = useState(false);
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
   const handleSearch = () => {
-    if (query) {
+    if (!isComposing && query.trim()) {
       router.push(`/search/result?q=${encodeURIComponent(query)}`);
       setOpen(false);
-      console.log(query);
+      setQuery("");
     }
-    setQuery("");
   };
 
   return (
@@ -35,7 +35,9 @@ export default function SearchModal() {
             placeholder="검색어를 입력하세요"
             value={query}
             onChange={e => setQuery(e.target.value)}
-            onKeyDown={e => e.key === "Enter" && handleSearch()}
+            onCompositionStart={() => setIsComposing(true)} // IME 입력 시작
+            onCompositionEnd={() => setIsComposing(false)} // IME 입력 완료
+            onKeyDown={e => e.key === "Enter" && handleSearch()} // Enter 키 입력 시 검색 실행
           >
             <TextField.Slot>
               <MagnifyingGlassIcon color="green" height="16" width="16" />
@@ -43,7 +45,14 @@ export default function SearchModal() {
           </TextField.Root>
           <Flex gap="3" mt="4" justify="end">
             <AlertDialog.Cancel>
-              <Button variant="soft" color="gray" onClick={() => setOpen(false)}>
+              <Button
+                variant="soft"
+                color="gray"
+                onClick={() => {
+                  setQuery("");
+                  setOpen(false);
+                }}
+              >
                 돌아가기
               </Button>
             </AlertDialog.Cancel>
