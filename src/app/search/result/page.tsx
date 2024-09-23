@@ -31,41 +31,43 @@ export default async function SearchResultsPage({ searchParams }: { searchParams
   return (
     <Flex direction="column" gap="6" p="6">
       {results.length > 0 ? (
-        <Flex direction="row" gap="6" wrap="wrap" justify="start">
+        <Flex direction="column" gap="6" p="6">
           <Heading size="6" mb="4">
             '{query}'에 대한 검색 결과
           </Heading>
-          {results.map(result => (
-            <Link
-              key={result.pageId}
-              href={`/posts/${result.pageId}`}
-              passHref
-              style={{
-                textDecoration: "none"
-              }}
-            >
-              <Box width="240px">
-                <Card className={styles.card} size="2">
-                  <Inset clip="padding-box" side="top" pb="current">
-                    <Image
-                      src={result.thumbnailUrl || ""}
-                      alt={`${result.title}의 썸네일 이미지`}
-                      width={200}
-                      height={200}
-                      style={{ objectFit: "cover", width: "100%", height: 140 }}
-                      priority
-                    />
-                  </Inset>
-                  <Heading size="4" mb="2" weight="bold" color="gray">
-                    {result.title}
-                  </Heading>
-                  <Text size="1" color="gray">
-                    {getFormatDate(result.createdAt)}
-                  </Text>
-                </Card>
-              </Box>
-            </Link>
-          ))}
+          <Flex direction="row" gap="6" wrap="wrap" justify="start">
+            {results.map(result => (
+              <Link
+                key={result.pageId}
+                href={`/posts/${result.pageId}`}
+                passHref
+                style={{
+                  textDecoration: "none"
+                }}
+              >
+                <Box width="240px">
+                  <Card className={styles.card} size="2">
+                    <Inset clip="padding-box" side="top" pb="current">
+                      <Image
+                        src={result.thumbnailUrl || ""}
+                        alt={`${result.title}의 썸네일 이미지`}
+                        width={200}
+                        height={200}
+                        style={{ objectFit: "cover", width: "100%", height: 140 }}
+                        priority
+                      />
+                    </Inset>
+                    <Heading size="4" mb="2" weight="bold" color="gray">
+                      {result.title}
+                    </Heading>
+                    <Text size="1" color="gray">
+                      {getFormatDate(result.createdAt)}
+                    </Text>
+                  </Card>
+                </Box>
+              </Link>
+            ))}
+          </Flex>
         </Flex>
       ) : (
         <Flex direction={"column"} align={"center"} gap={"6"}>
