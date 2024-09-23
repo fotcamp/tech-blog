@@ -23,21 +23,20 @@ export default function SearchModal() {
         <AlertDialog.Content maxWidth="450px">
           <VisuallyHidden>
             <AlertDialog.Title>검색 모달</AlertDialog.Title>
+            <AlertDialog.Description>검색어를 입력하세요</AlertDialog.Description>
           </VisuallyHidden>
-          <AlertDialog.Description size="2">
-            <TextField.Root
-              color="green"
-              variant="soft"
-              placeholder="검색어를 입력하세요"
-              value={query}
-              onChange={e => setQuery(e.target.value)}
-              onKeyDown={e => e.key === "Enter" && handleSearch()}
-            >
-              <TextField.Slot>
-                <MagnifyingGlassIcon color="green" height="16" width="16" />
-              </TextField.Slot>
-            </TextField.Root>
-          </AlertDialog.Description>
+          <TextField.Root
+            color="green"
+            variant="soft"
+            placeholder="검색어를 입력하세요"
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+            onKeyDown={e => e.key === "Enter" && handleSearch()}
+          >
+            <TextField.Slot>
+              <MagnifyingGlassIcon color="green" height="16" width="16" />
+            </TextField.Slot>
+          </TextField.Root>
           <Flex gap="3" mt="4" justify="end">
             <AlertDialog.Cancel>
               <Button variant="soft" color="gray">
