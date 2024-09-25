@@ -1,10 +1,9 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { Button } from "@radix-ui/themes";
+import { Button, Link, Flex, Strong } from "@radix-ui/themes";
+import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
-import { Link } from "@radix-ui/themes";
-import { Flex, Strong } from "@radix-ui/themes";
 import "./NavBar.css";
 import SearchModal from "../SearchModal/SearchModal";
 
@@ -30,7 +29,13 @@ export function NavBar() {
           </Link>
           <Flex align="center" gap="20px">
             <SearchModal />
-            <Button onClick={toggleMode}> Toggle mode </Button>
+            <Button size="2" color="green" variant="ghost" onClick={toggleMode}>
+              {theme === "dark" ? (
+                <MoonIcon width="24" height="24" />
+              ) : (
+                <SunIcon width="24" height="24" />
+              )}
+            </Button>
           </Flex>
         </Flex>
       </header>
