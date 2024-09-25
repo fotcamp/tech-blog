@@ -49,7 +49,11 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Theme>
+            <Theme
+              style={{
+                background: "var(--accent-1)"
+              }}
+            >
               <NavBar />
               {children}
             </Theme>
