@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AlertDialog, Flex, Button, TextField, VisuallyHidden } from "@radix-ui/themes";
-import { DismissableLayer } from "@radix-ui/react-dismissable-layer";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
 export default function SearchModal() {
@@ -26,45 +25,43 @@ export default function SearchModal() {
           <MagnifyingGlassIcon color="green" width="32" height="32" />
         </AlertDialog.Trigger>
         <AlertDialog.Content maxWidth="450px">
-          <DismissableLayer onPointerDownOutside={() => setOpen(false)}>
-            <VisuallyHidden>
-              <AlertDialog.Title>검색 모달</AlertDialog.Title>
-              <AlertDialog.Description>검색어를 입력하세요</AlertDialog.Description>
-            </VisuallyHidden>
-            <TextField.Root
-              color="green"
-              variant="soft"
-              placeholder="검색어를 입력하세요"
-              value={query}
-              onChange={e => setQuery(e.target.value)}
-              onCompositionStart={() => setIsComposing(true)}
-              onCompositionEnd={() => setIsComposing(false)}
-              onKeyDown={e => e.key === "Enter" && handleSearch()}
-            >
-              <TextField.Slot>
-                <MagnifyingGlassIcon color="green" height="16" width="16" />
-              </TextField.Slot>
-            </TextField.Root>
-            <Flex gap="3" mt="4" justify="end">
-              <AlertDialog.Cancel>
-                <Button
-                  variant="soft"
-                  color="gray"
-                  onClick={() => {
-                    setQuery("");
-                    setOpen(false);
-                  }}
-                >
-                  돌아가기
-                </Button>
-              </AlertDialog.Cancel>
-              <AlertDialog.Action>
-                <Button variant="solid" color="green" onClick={handleSearch}>
-                  검색하기
-                </Button>
-              </AlertDialog.Action>
-            </Flex>
-          </DismissableLayer>
+          <VisuallyHidden>
+            <AlertDialog.Title>검색 모달</AlertDialog.Title>
+            <AlertDialog.Description>검색어를 입력하세요</AlertDialog.Description>
+          </VisuallyHidden>
+          <TextField.Root
+            color="green"
+            variant="soft"
+            placeholder="검색어를 입력하세요"
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+            onCompositionStart={() => setIsComposing(true)}
+            onCompositionEnd={() => setIsComposing(false)}
+            onKeyDown={e => e.key === "Enter" && handleSearch()}
+          >
+            <TextField.Slot>
+              <MagnifyingGlassIcon color="green" height="16" width="16" />
+            </TextField.Slot>
+          </TextField.Root>
+          <Flex gap="3" mt="4" justify="end">
+            <AlertDialog.Cancel>
+              <Button
+                variant="soft"
+                color="gray"
+                onClick={() => {
+                  setQuery("");
+                  setOpen(false);
+                }}
+              >
+                돌아가기
+              </Button>
+            </AlertDialog.Cancel>
+            <AlertDialog.Action>
+              <Button variant="solid" color="green" onClick={handleSearch}>
+                검색하기
+              </Button>
+            </AlertDialog.Action>
+          </Flex>
         </AlertDialog.Content>
       </AlertDialog.Root>
     </>
