@@ -10,14 +10,10 @@ import { Box } from "@radix-ui/themes";
 import Image from "next/image";
 
 interface BannerProps {
-  articles: Article[];
+  topArticles: Article[];
 }
 
-const Banner = ({ articles }: BannerProps) => {
-  const topArticles = articles
-    .sort((a, b) => (b.properties.views?.number ?? 0) - (a.properties.views?.number ?? 0))
-    .slice(0, 5);
-
+const Banner = ({ topArticles }: BannerProps) => {
   const settings = {
     dots: false,
     infinite: true,
