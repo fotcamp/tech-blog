@@ -43,11 +43,11 @@ export default async function SearchResultsPage({ searchParams }: { searchParams
                 passHref
                 style={{
                   textDecoration: "none",
-                  color: "var(--accent-12)"
+                  color: "var(--gray-12)"
                 }}
               >
                 <Box width="240px">
-                  <Card className={styles.card} size="2">
+                  <Card className={styles.card} size="2" mb={"3"}>
                     <Inset clip="padding-box" side="top" pb="current">
                       <Image
                         src={result.thumbnailUrl || ""}
