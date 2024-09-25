@@ -6,6 +6,7 @@ import { Suspense } from "react";
 
 export default async function Home() {
   const notionArticles = await getArticleInfoList();
+
   const allRoles = Array.from(
     new Set(
       notionArticles.flatMap(article =>
@@ -17,7 +18,7 @@ export default async function Home() {
 
   return (
     <>
-      <Banner />
+      <Banner articles={notionArticles} />
       <Suspense>
         <FilterableArticleList articles={notionArticles} roles={roles} />
       </Suspense>

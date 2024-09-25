@@ -203,3 +203,16 @@ export async function getPostPage(pageId: string): Promise<PostPage> {
     throw error;
   }
 }
+
+// 조회수 순으로 상위 5개
+export async function getTopFiveArticles(): Promise<Article[]> {
+  const articles = await getArticleInfoList();
+
+  const topFiveArticles = articles
+    .sort((a, b) => {
+      return (b.properties.views?.number ?? 0) - (a.properties.views?.number ?? 0);
+    })
+    .slice(0, 5);
+
+  return topFiveArticles;
+}

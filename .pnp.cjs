@@ -46,6 +46,8 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:20.14.15"],\
           ["@types/react", "npm:18.3.3"],\
           ["@types/react-dom", "npm:18.3.0"],\
+          ["@types/react-slick", "npm:0.23.13"],\
+          ["@types/slick-carousel", "npm:1.6.40"],\
           ["@typescript-eslint/eslint-plugin", "virtual:547fc05fd4d204d5c49246022510aecd2649b67b16a9b5a3c6cde10c73cb76099b667f773c4c2e3c4795fb2cdbf398fc4e2c673120e29e6004fbc0d5ddef10d6#npm:8.0.1"],\
           ["@typescript-eslint/parser", "virtual:547fc05fd4d204d5c49246022510aecd2649b67b16a9b5a3c6cde10c73cb76099b667f773c4c2e3c4795fb2cdbf398fc4e2c673120e29e6004fbc0d5ddef10d6#npm:8.0.1"],\
           ["eslint", "npm:8.57.0"],\
@@ -64,9 +66,11 @@ const RAW_RUNTIME_STATE =
           ["react", "npm:18.3.1"],\
           ["react-dom", "virtual:547fc05fd4d204d5c49246022510aecd2649b67b16a9b5a3c6cde10c73cb76099b667f773c4c2e3c4795fb2cdbf398fc4e2c673120e29e6004fbc0d5ddef10d6#npm:18.3.1"],\
           ["react-markdown", "virtual:547fc05fd4d204d5c49246022510aecd2649b67b16a9b5a3c6cde10c73cb76099b667f773c4c2e3c4795fb2cdbf398fc4e2c673120e29e6004fbc0d5ddef10d6#npm:9.0.1"],\
+          ["react-slick", "virtual:547fc05fd4d204d5c49246022510aecd2649b67b16a9b5a3c6cde10c73cb76099b667f773c4c2e3c4795fb2cdbf398fc4e2c673120e29e6004fbc0d5ddef10d6#npm:0.30.2"],\
           ["rehype-highlight", "npm:7.0.0"],\
           ["rehype-raw", "npm:7.0.0"],\
           ["remark-gfm", "npm:4.0.0"],\
+          ["slick-carousel", "virtual:547fc05fd4d204d5c49246022510aecd2649b67b16a9b5a3c6cde10c73cb76099b667f773c4c2e3c4795fb2cdbf398fc4e2c673120e29e6004fbc0d5ddef10d6#npm:1.8.1"],\
           ["storybook", "npm:8.2.8"],\
           ["typescript", "patch:typescript@npm%3A5.5.4#optional!builtin<compat/typescript>::version=5.5.4&hash=379a07"],\
           ["zod", "npm:3.23.8"],\
@@ -6969,6 +6973,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@types/jquery", [\
+      ["npm:3.5.30", {\
+        "packageLocation": "../AppData/Local/Yarn/Berry/cache/@types-jquery-npm-3.5.30-1bf9d0e280-10c0.zip/node_modules/@types/jquery/",\
+        "packageDependencies": [\
+          ["@types/jquery", "npm:3.5.30"],\
+          ["@types/sizzle", "npm:2.3.8"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@types/json-schema", [\
       ["npm:7.0.15", {\
         "packageLocation": "../AppData/Local/Yarn/Berry/cache/@types-json-schema-npm-7.0.15-fd16381786-10c0.zip/node_modules/@types/json-schema/",\
@@ -7127,6 +7141,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@types/react-slick", [\
+      ["npm:0.23.13", {\
+        "packageLocation": "../AppData/Local/Yarn/Berry/cache/@types-react-slick-npm-0.23.13-ad62d6348a-10c0.zip/node_modules/@types/react-slick/",\
+        "packageDependencies": [\
+          ["@types/react-slick", "npm:0.23.13"],\
+          ["@types/react", "npm:18.3.3"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@types/resolve", [\
       ["npm:1.20.6", {\
         "packageLocation": "../AppData/Local/Yarn/Berry/cache/@types-resolve-npm-1.20.6-6ab126a04b-10c0.zip/node_modules/@types/resolve/",\
@@ -7164,6 +7188,25 @@ const RAW_RUNTIME_STATE =
           ["@types/http-errors", "npm:2.0.4"],\
           ["@types/node", "npm:22.2.0"],\
           ["@types/send", "npm:0.17.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/sizzle", [\
+      ["npm:2.3.8", {\
+        "packageLocation": "../AppData/Local/Yarn/Berry/cache/@types-sizzle-npm-2.3.8-b4e813dde8-10c0.zip/node_modules/@types/sizzle/",\
+        "packageDependencies": [\
+          ["@types/sizzle", "npm:2.3.8"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/slick-carousel", [\
+      ["npm:1.6.40", {\
+        "packageLocation": "../AppData/Local/Yarn/Berry/cache/@types-slick-carousel-npm-1.6.40-b2e7e9c1a1-10c0.zip/node_modules/@types/slick-carousel/",\
+        "packageDependencies": [\
+          ["@types/slick-carousel", "npm:1.6.40"],\
+          ["@types/jquery", "npm:3.5.30"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -9141,6 +9184,13 @@ const RAW_RUNTIME_STATE =
           ["classnames", "npm:2.3.2"]\
         ],\
         "linkType": "HARD"\
+      }],\
+      ["npm:2.5.1", {\
+        "packageLocation": "../AppData/Local/Yarn/Berry/cache/classnames-npm-2.5.1-c7273f3423-10c0.zip/node_modules/classnames/",\
+        "packageDependencies": [\
+          ["classnames", "npm:2.5.1"]\
+        ],\
+        "linkType": "HARD"\
       }]\
     ]],\
     ["clean-css", [\
@@ -10358,6 +10408,15 @@ const RAW_RUNTIME_STATE =
           ["enhanced-resolve", "npm:5.17.1"],\
           ["graceful-fs", "npm:4.2.11"],\
           ["tapable", "npm:2.2.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["enquire.js", [\
+      ["npm:2.1.6", {\
+        "packageLocation": "../AppData/Local/Yarn/Berry/cache/enquire.js-npm-2.1.6-fc4ea2e583-10c0.zip/node_modules/enquire.js/",\
+        "packageDependencies": [\
+          ["enquire.js", "npm:2.1.6"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -13525,6 +13584,16 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../AppData/Local/Yarn/Berry/cache/json-stable-stringify-without-jsonify-npm-1.0.1-b65772b28b-10c0.zip/node_modules/json-stable-stringify-without-jsonify/",\
         "packageDependencies": [\
           ["json-stable-stringify-without-jsonify", "npm:1.0.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["json2mq", [\
+      ["npm:0.2.0", {\
+        "packageLocation": "../AppData/Local/Yarn/Berry/cache/json2mq-npm-0.2.0-aa8a6516b9-10c0.zip/node_modules/json2mq/",\
+        "packageDependencies": [\
+          ["json2mq", "npm:0.2.0"],\
+          ["string-convert", "npm:0.2.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -16726,6 +16795,37 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["react-slick", [\
+      ["npm:0.30.2", {\
+        "packageLocation": "../AppData/Local/Yarn/Berry/cache/react-slick-npm-0.30.2-0b5987ee2e-10c0.zip/node_modules/react-slick/",\
+        "packageDependencies": [\
+          ["react-slick", "npm:0.30.2"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:547fc05fd4d204d5c49246022510aecd2649b67b16a9b5a3c6cde10c73cb76099b667f773c4c2e3c4795fb2cdbf398fc4e2c673120e29e6004fbc0d5ddef10d6#npm:0.30.2", {\
+        "packageLocation": "./.yarn/__virtual__/react-slick-virtual-07b29b711e/2/AppData/Local/Yarn/Berry/cache/react-slick-npm-0.30.2-0b5987ee2e-10c0.zip/node_modules/react-slick/",\
+        "packageDependencies": [\
+          ["react-slick", "virtual:547fc05fd4d204d5c49246022510aecd2649b67b16a9b5a3c6cde10c73cb76099b667f773c4c2e3c4795fb2cdbf398fc4e2c673120e29e6004fbc0d5ddef10d6#npm:0.30.2"],\
+          ["@types/react", "npm:18.3.3"],\
+          ["@types/react-dom", "npm:18.3.0"],\
+          ["classnames", "npm:2.5.1"],\
+          ["enquire.js", "npm:2.1.6"],\
+          ["json2mq", "npm:0.2.0"],\
+          ["lodash.debounce", "npm:4.0.8"],\
+          ["react", "npm:18.3.1"],\
+          ["react-dom", "virtual:547fc05fd4d204d5c49246022510aecd2649b67b16a9b5a3c6cde10c73cb76099b667f773c4c2e3c4795fb2cdbf398fc4e2c673120e29e6004fbc0d5ddef10d6#npm:18.3.1"],\
+          ["resize-observer-polyfill", "npm:1.5.1"]\
+        ],\
+        "packagePeers": [\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["react-style-singleton", [\
       ["npm:2.2.1", {\
         "packageLocation": "../AppData/Local/Yarn/Berry/cache/react-style-singleton-npm-2.2.1-e45b97b153-10c0.zip/node_modules/react-style-singleton/",\
@@ -17089,6 +17189,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../AppData/Local/Yarn/Berry/cache/requireindex-npm-1.2.0-483c52ddaf-10c0.zip/node_modules/requireindex/",\
         "packageDependencies": [\
           ["requireindex", "npm:1.2.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["resize-observer-polyfill", [\
+      ["npm:1.5.1", {\
+        "packageLocation": "../AppData/Local/Yarn/Berry/cache/resize-observer-polyfill-npm-1.5.1-603120e8a0-10c0.zip/node_modules/resize-observer-polyfill/",\
+        "packageDependencies": [\
+          ["resize-observer-polyfill", "npm:1.5.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -17632,6 +17741,28 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["slick-carousel", [\
+      ["npm:1.8.1", {\
+        "packageLocation": "../AppData/Local/Yarn/Berry/cache/slick-carousel-npm-1.8.1-8382d373c2-10c0.zip/node_modules/slick-carousel/",\
+        "packageDependencies": [\
+          ["slick-carousel", "npm:1.8.1"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:547fc05fd4d204d5c49246022510aecd2649b67b16a9b5a3c6cde10c73cb76099b667f773c4c2e3c4795fb2cdbf398fc4e2c673120e29e6004fbc0d5ddef10d6#npm:1.8.1", {\
+        "packageLocation": "./.yarn/__virtual__/slick-carousel-virtual-501e375ed7/2/AppData/Local/Yarn/Berry/cache/slick-carousel-npm-1.8.1-8382d373c2-10c0.zip/node_modules/slick-carousel/",\
+        "packageDependencies": [\
+          ["slick-carousel", "virtual:547fc05fd4d204d5c49246022510aecd2649b67b16a9b5a3c6cde10c73cb76099b667f773c4c2e3c4795fb2cdbf398fc4e2c673120e29e6004fbc0d5ddef10d6#npm:1.8.1"],\
+          ["@types/jquery", null],\
+          ["jquery", null]\
+        ],\
+        "packagePeers": [\
+          "@types/jquery",\
+          "jquery"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["smart-buffer", [\
       ["npm:4.2.0", {\
         "packageLocation": "../AppData/Local/Yarn/Berry/cache/smart-buffer-npm-4.2.0-5ac3f668bb-10c0.zip/node_modules/smart-buffer/",\
@@ -17840,6 +17971,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../AppData/Local/Yarn/Berry/cache/string-argv-npm-0.3.2-6e057a88f1-10c0.zip/node_modules/string-argv/",\
         "packageDependencies": [\
           ["string-argv", "npm:0.3.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["string-convert", [\
+      ["npm:0.2.1", {\
+        "packageLocation": "../AppData/Local/Yarn/Berry/cache/string-convert-npm-0.2.1-f1a42cb9ea-10c0.zip/node_modules/string-convert/",\
+        "packageDependencies": [\
+          ["string-convert", "npm:0.2.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -18234,6 +18374,8 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:20.14.15"],\
           ["@types/react", "npm:18.3.3"],\
           ["@types/react-dom", "npm:18.3.0"],\
+          ["@types/react-slick", "npm:0.23.13"],\
+          ["@types/slick-carousel", "npm:1.6.40"],\
           ["@typescript-eslint/eslint-plugin", "virtual:547fc05fd4d204d5c49246022510aecd2649b67b16a9b5a3c6cde10c73cb76099b667f773c4c2e3c4795fb2cdbf398fc4e2c673120e29e6004fbc0d5ddef10d6#npm:8.0.1"],\
           ["@typescript-eslint/parser", "virtual:547fc05fd4d204d5c49246022510aecd2649b67b16a9b5a3c6cde10c73cb76099b667f773c4c2e3c4795fb2cdbf398fc4e2c673120e29e6004fbc0d5ddef10d6#npm:8.0.1"],\
           ["eslint", "npm:8.57.0"],\
@@ -18252,9 +18394,11 @@ const RAW_RUNTIME_STATE =
           ["react", "npm:18.3.1"],\
           ["react-dom", "virtual:547fc05fd4d204d5c49246022510aecd2649b67b16a9b5a3c6cde10c73cb76099b667f773c4c2e3c4795fb2cdbf398fc4e2c673120e29e6004fbc0d5ddef10d6#npm:18.3.1"],\
           ["react-markdown", "virtual:547fc05fd4d204d5c49246022510aecd2649b67b16a9b5a3c6cde10c73cb76099b667f773c4c2e3c4795fb2cdbf398fc4e2c673120e29e6004fbc0d5ddef10d6#npm:9.0.1"],\
+          ["react-slick", "virtual:547fc05fd4d204d5c49246022510aecd2649b67b16a9b5a3c6cde10c73cb76099b667f773c4c2e3c4795fb2cdbf398fc4e2c673120e29e6004fbc0d5ddef10d6#npm:0.30.2"],\
           ["rehype-highlight", "npm:7.0.0"],\
           ["rehype-raw", "npm:7.0.0"],\
           ["remark-gfm", "npm:4.0.0"],\
+          ["slick-carousel", "virtual:547fc05fd4d204d5c49246022510aecd2649b67b16a9b5a3c6cde10c73cb76099b667f773c4c2e3c4795fb2cdbf398fc4e2c673120e29e6004fbc0d5ddef10d6#npm:1.8.1"],\
           ["storybook", "npm:8.2.8"],\
           ["typescript", "patch:typescript@npm%3A5.5.4#optional!builtin<compat/typescript>::version=5.5.4&hash=379a07"],\
           ["zod", "npm:3.23.8"],\
