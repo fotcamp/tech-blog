@@ -6,13 +6,14 @@ import { SunIcon, MoonIcon, GitHubLogoIcon, DownloadIcon } from "@radix-ui/react
 import Image from "next/image";
 import "./Footer.css";
 import SearchModal from "../SearchModal/SearchModal";
+import { github, finhubGoogle, finhubIos } from "@/app/_constants/link.ts";
 
 export function Footer() {
   return (
     <footer className="footer">
       <Flex align="center" justify="center" width={"100%"}>
         <Link
-          href="https://github.com/fotcamp"
+          href={github}
           style={{
             display: "flex",
             alignItems: "center",
@@ -30,7 +31,7 @@ export function Footer() {
         Download Finhub
       </Text>
       <Flex align="center" justify="center" gap="20px">
-        <Link href="https://play.google.com/store/apps/details?id=com.fotcamp.finhub">
+        <Link href={finhubGoogle}>
           <Button
             size="1"
             color="gray"
@@ -41,7 +42,7 @@ export function Footer() {
             Google Play
           </Button>
         </Link>
-        <Link href="https://apps.apple.com/kr/app/%ED%95%80%ED%97%88%EB%B8%8C-%EB%8B%B9%EC%8B%A0%EB%A7%8C%EC%9D%98-%EA%B8%88%EC%9C%B5-%EC%9C%84%ED%82%A4/id6477758774">
+        <Link href={finhubIos}>
           <Button
             size="1"
             color="gray"
