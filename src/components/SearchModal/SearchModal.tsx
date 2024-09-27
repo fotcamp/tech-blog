@@ -22,7 +22,14 @@ export default function SearchModal() {
     <>
       <AlertDialog.Root open={open} onOpenChange={setOpen}>
         <AlertDialog.Trigger onClick={() => setOpen(true)}>
-          <MagnifyingGlassIcon color="green" width="32" height="32" />
+          <Button
+            size="1"
+            color="green"
+            variant="ghost"
+            style={{ width: "32px", height: "32px", padding: "0" }}
+          >
+            <MagnifyingGlassIcon width="20" height="20" />
+          </Button>
         </AlertDialog.Trigger>
         <AlertDialog.Content maxWidth="450px">
           <VisuallyHidden>

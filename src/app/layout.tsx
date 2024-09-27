@@ -5,6 +5,7 @@ import { Theme } from "@radix-ui/themes";
 import ReactQueryProviders from "@/providers/ReactQueryProviders";
 import { ThemeProviders } from "@/providers/ThemeProviders";
 import { NavBar } from "@/components/NavBar/NavBart";
+import { Footer } from "@/components/Footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -49,9 +50,14 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Theme>
+            <Theme
+              style={{
+                background: "var(--accent-1)"
+              }}
+            >
               <NavBar />
               {children}
+              <Footer />
             </Theme>
           </ThemeProviders>
         </ReactQueryProviders>

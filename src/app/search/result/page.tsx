@@ -31,22 +31,23 @@ export default async function SearchResultsPage({ searchParams }: { searchParams
   return (
     <Flex direction="column" gap="6" p="6">
       {results.length > 0 ? (
-        <Flex direction="column" gap="6" p="6">
+        <Flex direction="column" gap="6">
           <Heading size="6" mb="4">
             '{query}'에 대한 검색 결과
           </Heading>
-          <Flex direction="row" gap="6" wrap="wrap" justify="start">
+          <Flex direction="row" gap="6" wrap="wrap" justify={{ initial: "center", sm: "start" }}>
             {results.map(result => (
               <Link
                 key={result.pageId}
                 href={`/posts/${result.pageId}`}
                 passHref
                 style={{
-                  textDecoration: "none"
+                  textDecoration: "none",
+                  color: "var(--gray-12)"
                 }}
               >
                 <Box width="240px">
-                  <Card className={styles.card} size="2">
+                  <Card className={styles.card} size="2" mb={"3"}>
                     <Inset clip="padding-box" side="top" pb="current">
                       <Image
                         src={result.thumbnailUrl || ""}
@@ -57,7 +58,7 @@ export default async function SearchResultsPage({ searchParams }: { searchParams
                         priority
                       />
                     </Inset>
-                    <Heading size="4" mb="2" weight="bold" color="gray">
+                    <Heading size="4" mb="2" weight="bold">
                       {result.title}
                     </Heading>
                     <Text size="1" color="gray">
