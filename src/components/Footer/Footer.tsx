@@ -6,7 +6,7 @@ import { SunIcon, MoonIcon, GitHubLogoIcon, DownloadIcon } from "@radix-ui/react
 import Image from "next/image";
 import "./Footer.css";
 import SearchModal from "../SearchModal/SearchModal";
-import { github, finhubGoogle, finhubIos } from "@/app/_constants/link.ts";
+import { github, finhubGoogle, finhubIos } from "@/app/_constants/link";
 
 export function Footer() {
   return (
