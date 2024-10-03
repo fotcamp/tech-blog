@@ -4,6 +4,8 @@ export interface Article {
   createdAt: Date;
   thumbnailUrl: string;
   properties: PageProperties;
+  showCreatedAt?: boolean;
+  showRole?: boolean;
 }
 
 export interface MultiSelectOption {

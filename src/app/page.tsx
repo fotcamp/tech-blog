@@ -1,11 +1,13 @@
-import { getArticleInfoList } from "@/api/notion";
+import { getArticleInfoList, getTopFiveArticles } from "@/api/notion";
 import "./page.css";
 import FilterableArticleList from "./_component/main/FilterableArticleList";
-import Banner from "./_component/main/Banner";
+import Popular from "./_component/main/Popular";
 import { Suspense } from "react";
 
 export default async function Home() {
   const notionArticles = await getArticleInfoList();
+  const topFiveArticles = getTopFiveArticles(notionArticles);
+
   const allRoles = Array.from(
     new Set(
       notionArticles.flatMap(article =>
@@ -17,7 +19,7 @@ export default async function Home() {
 
   return (
     <>
-      <Banner />
+      <Popular topArticles={topFiveArticles} />
       <Suspense>
         <FilterableArticleList articles={notionArticles} roles={roles} />
       </Suspense>

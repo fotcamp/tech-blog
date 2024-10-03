@@ -10,7 +10,9 @@ export const ArticleCard = ({
   title,
   createdAt,
   thumbnailUrl,
-  properties
+  properties,
+  showCreatedAt = true,
+  showRole = true
 }: ArticleCardProps) => {
   const roles = properties.role?.multi_select;
   return (
@@ -22,20 +24,25 @@ export const ArticleCard = ({
             position="relative"
             overflow="hidden"
             width="100%"
-            height="250px"
-            style={{ borderRadius: 20 }}
+            height="300px"
+            style={{
+              borderRadius: showCreatedAt ? 20 : 0,
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20
+            }}
           >
             <Image
               src={thumbnailUrl || ""}
               alt="article thumnail image"
-              layout={"fill"}
-              objectFit={"cover"}
+              fill
+              style={{ objectFit: "cover" }}
               className="thumbnail"
             />
           </Box>
           <Text
             style={{
               marginTop: "20px",
+              marginInline: showCreatedAt ? "0px" : "20px",
               color: "#191B1c",
               fontFamily: "Pretendard Variable",
               fontSize: "24px",
@@ -45,23 +52,24 @@ export const ArticleCard = ({
             {title}
           </Text>
           <Text size="1" mt="2" style={{ color: "#7B8287" }}>
-            {createdAt.toISOString().slice(0, 10)}
+            {showCreatedAt && createdAt.toISOString().slice(0, 10)}
           </Text>
           <Box mt={"15px"}>
-            {roles?.map((role: any, index: number) => (
-              <Box
-                key={index}
-                p={"7px 14px"}
-                style={{
-                  backgroundColor: "#E6E8EB",
-                  borderRadius: "20px",
-                  display: "inline-flex",
-                  height: "36px"
-                }}
-              >
-                <Text style={{ color: "#7B8287", fontSize: "14px" }}>{role.name}</Text>
-              </Box>
-            ))}
+            {showRole &&
+              roles?.map((role: any, index: number) => (
+                <Box
+                  key={index}
+                  p={"7px 14px"}
+                  style={{
+                    backgroundColor: "#E6E8EB",
+                    borderRadius: "20px",
+                    display: "inline-flex",
+                    height: "36px"
+                  }}
+                >
+                  <Text style={{ color: "#7B8287", fontSize: "14px" }}>{role.name}</Text>
+                </Box>
+              ))}
           </Box>
         </Flex>
       </Box>
