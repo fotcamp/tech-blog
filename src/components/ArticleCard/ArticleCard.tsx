@@ -25,19 +25,24 @@ export const ArticleCard = ({
             overflow="hidden"
             width="100%"
             height="300px"
-            style={{ borderRadius: 20 }}
+            style={{
+              borderRadius: showCreatedAt ? 20 : 0,
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20
+            }}
           >
             <Image
               src={thumbnailUrl || ""}
               alt="article thumnail image"
-              layout={"fill"}
-              objectFit={"cover"}
+              fill
+              style={{ objectFit: "cover" }}
               className="thumbnail"
             />
           </Box>
           <Text
             style={{
               marginTop: "20px",
+              marginInline: showCreatedAt ? "0px" : "20px",
               color: "#191B1c",
               fontFamily: "Pretendard Variable",
               fontSize: "24px",

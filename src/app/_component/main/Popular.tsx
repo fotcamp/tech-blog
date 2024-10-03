@@ -9,11 +9,49 @@ import "slick-carousel/slick/slick-theme.css";
 import { Box } from "@radix-ui/themes";
 import Image from "next/image";
 
-interface BannerProps {
+interface PopularProp {
   topArticles: Article[];
 }
 
-const Banner = ({ topArticles }: BannerProps) => {
+const NextArrow = (props: any) => {
+  const { onClick } = props;
+  return (
+    <div
+      onClick={onClick}
+      style={{
+        position: "absolute",
+        right: "-40px",
+        top: "50%",
+        transform: "translateY(-50%)",
+        zIndex: 1,
+        cursor: "pointer"
+      }}
+    >
+      <Image src="/next_button.svg" alt="Next" width={40} height={40} />
+    </div>
+  );
+};
+
+const PrevArrow = (props: any) => {
+  const { onClick } = props;
+  return (
+    <div
+      onClick={onClick}
+      style={{
+        position: "absolute",
+        left: "-40px",
+        top: "50%",
+        transform: "translateY(-50%)",
+        zIndex: 1,
+        cursor: "pointer"
+      }}
+    >
+      <Image src="/back_button.svg" alt="Previous" width={40} height={40} />
+    </div>
+  );
+};
+
+const Popular = ({ topArticles }: PopularProp) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -22,8 +60,8 @@ const Banner = ({ topArticles }: BannerProps) => {
     slidesToScroll: 1,
     arrows: true,
     autoplay: true,
-    nextArrow: <Image src="/next_button.svg" alt="search" width={32} height={32}></Image>,
-    prevArrow: <Image src="/back_button.svg" alt="search" width={32} height={32}></Image>
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />
   };
 
   return (
@@ -32,6 +70,7 @@ const Banner = ({ topArticles }: BannerProps) => {
       <Box
         className="popular"
         style={{
+          position: "relative",
           borderRadius: "20px",
           boxShadow: "5px 5px 10px rgba(0, 0, 0, 0.1)"
         }}
@@ -55,4 +94,4 @@ const Banner = ({ topArticles }: BannerProps) => {
   );
 };
 
-export default Banner;
+export default Popular;
