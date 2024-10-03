@@ -1,0 +1,11 @@
+.card {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow: 0 2px 4px var(--slate-a3);
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px var(--slate-a3);
+}
