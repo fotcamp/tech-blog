@@ -4,12 +4,19 @@ import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github.css";
 import "./mark-down-style.css";
-import { BlockQuote, CodeBlock, Anchor, Paragraph, Callout, IndexList } from "./components";
+import {
+  BlockQuote,
+  CodeBlock,
+  Anchor,
+  Paragraph,
+  Callout,
+  IndexList,
+  CustomCheckbox
+} from "./components";
 import React, { Fragment } from "react";
-import { Box, Heading } from "@radix-ui/themes";
+import { Heading } from "@radix-ui/themes";
 import rehypeRaw from "rehype-raw";
 import rehypeAttrs from "rehype-attr";
-import { CustomCheckbox } from "./components/CustomCheckbox";
 
 const getHeadingText = (children: React.ReactNode): string => {
   const headingText = React.Children.toArray(children)
