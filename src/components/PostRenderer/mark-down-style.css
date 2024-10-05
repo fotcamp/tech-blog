@@ -82,3 +82,39 @@ hr {
   border-top: 1px solid var(--gray-4);
   margin: 16px 0;
 }
+
+/** spacing */
+.callout {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.finhub-paragraph {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.finhub-heading_1 {
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
+
+.finhub-heading_2 {
+  margin-top: 10px;
+  margin-bottom: 6px;
+}
+
+.finhub-heading_3 {
+  margin-top: 8px;
+  margin-bottom: 6px;
+}
+
+.finhub-image {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.finhub-quote {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}

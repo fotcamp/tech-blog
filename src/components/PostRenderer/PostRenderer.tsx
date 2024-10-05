@@ -14,7 +14,7 @@ import {
   CustomCheckbox
 } from "./components";
 import React, { Fragment } from "react";
-import { Heading } from "@radix-ui/themes";
+import { Box, Heading } from "@radix-ui/themes";
 import rehypeRaw from "rehype-raw";
 import rehypeAttrs from "rehype-attr";
 
@@ -28,7 +28,7 @@ const getHeadingText = (children: React.ReactNode): string => {
 
 export const PostRenderer = async ({ content }: { content: string }) => {
   return (
-    <Fragment>
+    <Box>
       <IndexList content={content} />
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
@@ -41,6 +41,7 @@ export const PostRenderer = async ({ content }: { content: string }) => {
               width={500}
               height={300}
               style={{ width: "100%", height: "auto", borderRadius: "10px" }}
+              className={props.className}
             />
           ),
           code: CodeBlock,
@@ -54,17 +55,32 @@ export const PostRenderer = async ({ content }: { content: string }) => {
           a: Anchor,
           p: Paragraph,
           h1: props => (
-            <Heading size="7" as="h1" id={getHeadingText(props.children)}>
+            <Heading
+              size="7"
+              as="h1"
+              id={getHeadingText(props.children)}
+              className={props.className}
+            >
               {props.children}
             </Heading>
           ),
           h2: props => (
-            <Heading size="6" as="h2" id={getHeadingText(props.children)}>
+            <Heading
+              size="6"
+              as="h2"
+              id={getHeadingText(props.children)}
+              className={props.className}
+            >
               {props.children}
             </Heading>
           ),
           h3: props => (
-            <Heading size="5" as="h3" id={getHeadingText(props.children)}>
+            <Heading
+              size="5"
+              as="h3"
+              id={getHeadingText(props.children)}
+              className={props.className}
+            >
               {props.children}
             </Heading>
           ),
@@ -78,6 +94,6 @@ export const PostRenderer = async ({ content }: { content: string }) => {
       >
         {content}
       </ReactMarkdown>
-    </Fragment>
+    </Box>
   );
 };
