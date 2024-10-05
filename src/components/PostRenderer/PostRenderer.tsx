@@ -9,6 +9,7 @@ import React, { Fragment } from "react";
 import { Box, Heading } from "@radix-ui/themes";
 import rehypeRaw from "rehype-raw";
 import rehypeAttrs from "rehype-attr";
+import { CustomCheckbox } from "./components/CustomCheckbox";
 
 const getHeadingText = (children: React.ReactNode): string => {
   const headingText = React.Children.toArray(children)
@@ -32,7 +33,7 @@ export const PostRenderer = async ({ content }: { content: string }) => {
               alt={props.alt || ""}
               width={500}
               height={300}
-              style={{ width: "100%", height: "auto" }}
+              style={{ width: "100%", height: "auto", borderRadius: "10px" }}
             />
           ),
           code: CodeBlock,
@@ -46,20 +47,26 @@ export const PostRenderer = async ({ content }: { content: string }) => {
           a: Anchor,
           p: Paragraph,
           h1: props => (
-            <Heading as="h1" id={getHeadingText(props.children)}>
+            <Heading size="7" as="h1" id={getHeadingText(props.children)}>
               {props.children}
             </Heading>
           ),
           h2: props => (
-            <Heading as="h2" id={getHeadingText(props.children)}>
+            <Heading size="6" as="h2" id={getHeadingText(props.children)}>
               {props.children}
             </Heading>
           ),
           h3: props => (
-            <Heading as="h3" id={getHeadingText(props.children)}>
+            <Heading size="5" as="h3" id={getHeadingText(props.children)}>
               {props.children}
             </Heading>
-          )
+          ),
+          input: ({ node, ...props }) => {
+            if (props.type === "checkbox") {
+              return <CustomCheckbox checked={props.checked ?? false} />;
+            }
+            return <input {...props} />;
+          }
         }}
       >
         {content}
