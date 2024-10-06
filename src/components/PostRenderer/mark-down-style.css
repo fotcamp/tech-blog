@@ -1,5 +1,120 @@
 .code-block {
   padding: var(--space-1);
-  background-color: var(--accent-3);
+  background-color: var(--green-2);
   border-radius: var(--radius-1);
+  color: var(--green-11);
+}
+
+pre > .code-block {
+  display: block;
+  padding: var(--space-5);
+  color: var(--gray-12);
+  border-radius: var(--radius-5);
+  overflow: auto;
+}
+
+.paragraph {
+  padding: var(--space-1);
+  color: var(--gray-12);
+}
+
+.block-quote {
+  border-left: 4px solid var(--green-4);
+}
+
+.block-quote > p {
+  color: var(--gray-11);
+}
+
+.callout {
+  position: relative;
+  background-color: var(--green-3);
+  border-radius: var(--radius-5);
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-5);
+  padding-right: var(--space-5);
+  padding-left: calc(var(--space-5));
+}
+
+/* .callout::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  background-image: url("/icon/callout-icon.svg");
+  left: 24px;
+  top: 27px;
+} */
+
+li:has(input[type="checkbox"]) {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  font-size: 16px;
+  display: flex;
+  align-content: center;
+  gap: 6px;
+}
+
+ol,
+ul {
+  margin-bottom: 6px;
+  margin-top: 6px;
+  padding-left: 20px;
+  list-style-position: inside;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+li {
+  margin-bottom: 16px;
+  font-size: 16px;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--gray-4);
+  margin: 16px 0;
+}
+
+/** spacing */
+.callout {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.finhub-paragraph {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.finhub-heading_1 {
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
+
+.finhub-heading_2 {
+  margin-top: 10px;
+  margin-bottom: 6px;
+}
+
+.finhub-heading_3 {
+  margin-top: 8px;
+  margin-bottom: 6px;
+}
+
+.finhub-image {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.finhub-quote {
+  margin-top: 6px;
+  margin-bottom: 6px;
 }

@@ -67,7 +67,7 @@ export default async function PostPage({ params }: { params: { postNo: string } 
     >
       <Flex
         width="100%"
-        maxWidth="1200px"
+        maxWidth="720px"
         direction="column"
         gap={{ initial: "3", md: "4", lg: "6" }}
       >

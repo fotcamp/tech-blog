@@ -4,7 +4,7 @@ import {
   PageObjectResponse
 } from "@notionhq/client/build/src/api-endpoints";
 import { NotionToMarkdown } from "notion-to-md";
-import { Article, MultiSelectOption, PageProperties } from "./types";
+import { Article, MultiSelectOption } from "./types";
 
 export const notionClient = new Client({
   auth: process.env.NOTION_TOKEN
@@ -116,8 +116,26 @@ export async function getArticleInfoList(): Promise<Article[]> {
  */
 export const fetchArticleContent = async (pageId: string) => {
   const mdBlocks = await n2m.pageToMarkdown(pageId);
-  return n2m.toMarkdownString(mdBlocks);
+  const customizedMdBlocks = customizeMdBlocks(mdBlocks);
+  return n2m.toMarkdownString(customizedMdBlocks);
 };
+
+/**
+ * Add notion block type as md className
+ */
+function customizeMdBlocks(blocks: any[]) {
+  return blocks.map(block => {
+    if (block.children.length) return block;
+
+    const newContent =
+      block.parent + "\n" + "<!--rehype:class=finhub-" + block.type + "-->" + "\n ";
+
+    return {
+      ...block,
+      parent: newContent
+    };
+  });
+}
 
 export const searchArticle = async (key: string) => {
   try {
