@@ -41,22 +41,36 @@ export async function incrementPageView(
 /**
  * get notion database
  */
-export async function queryNotionDatabase(startCursor?: string, isPopular = false) {
+export async function queryNotionDatabase(
+  startCursor?: string,
+  isPopular = false,
+  role?: string | undefined
+) {
   try {
+    const filters: any = [
+      {
+        property: "exposure",
+        checkbox: {
+          equals: true
+        }
+      }
+    ];
+
+    if (role) {
+      filters.push({
+        property: "role",
+        multi_select: {
+          contains: role
+        }
+      });
+    }
     const response = await notionClient.databases.query({
       database_id: process.env.NOTION_DATABASE_ID!,
       filter: {
-        and: [
-          {
-            property: "exposure",
-            checkbox: {
-              equals: true
-            }
-          }
-        ]
+        and: filters
       },
       start_cursor: startCursor || undefined,
-      page_size: isPopular ? undefined : 4
+      page_size: isPopular ? undefined : 2
     });
 
     console.log("Notion API Response:", response);
@@ -73,9 +87,14 @@ export async function queryNotionDatabase(startCursor?: string, isPopular = fals
 
 export async function getArticleInfoList(
   startCursor?: string,
-  isPopular = false
-): Promise<{ articles: Article[]; nextCursor?: string | null }> {
-  const { results, nextCursor } = await queryNotionDatabase(startCursor, isPopular);
+  isPopular = false,
+  role?: string
+): Promise<{ articles: Article[]; nextCursor?: string | null; role?: string | undefined }> {
+  const { results, nextCursor } = await queryNotionDatabase(
+    startCursor,
+    isPopular,
+    role === "전체" ? undefined : role
+  );
 
   const articleList = results.map(item => {
     const itemName = item.properties.name as any;

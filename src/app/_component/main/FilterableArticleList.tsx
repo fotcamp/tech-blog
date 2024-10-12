@@ -22,29 +22,14 @@ const FilterableArticleList = ({
 
   const [filteredArticles, setFilteredArticles] = useState<Article[]>(initialArticles);
   const [selectedRole, setSelectedRole] = useState<string>(initialRole);
-  const [visibleCount, setVisibleCount] = useState<number>(4);
   const [nextCursorState, setNextCursorState] = useState<string | null | undefined>(nextCursor);
-
-  useEffect(() => {
-    const initialRoleToFilter = initialRole === "전체" ? null : initialRole;
-    const roleToFilter = selectedRole === "전체" ? null : selectedRole;
-    const effectiveRoleToFilter = roleToFilter || initialRoleToFilter;
-
-    const filtered = !effectiveRoleToFilter
-      ? initialArticles
-      : initialArticles.filter(article =>
-          article.properties.role?.multi_select.some(
-            (roleObj: any) => roleObj.name === effectiveRoleToFilter
-          )
-        );
-
-    setFilteredArticles(filtered);
-  }, [selectedRole, initialRole, initialArticles]);
 
   const handleLoadMore = async () => {
     if (nextCursorState) {
       try {
-        const response = await fetch(`/api/articles?cursor=${nextCursorState}`);
+        const response = await fetch(
+          `/api/articles?cursor=${nextCursorState}&role=${selectedRole}`
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -61,13 +46,13 @@ const FilterableArticleList = ({
   };
 
   const handleRoleClick = (role: string) => {
-    setSelectedRole(role);
     const params = new URLSearchParams(window.location.search);
     params.set("role", role);
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     window.history.pushState(null, "", newUrl);
-  };
 
+    window.location.reload();
+  };
   return (
     <>
       <Flex
@@ -122,30 +107,32 @@ const FilterableArticleList = ({
           />
         ))}
       </Grid>
-      <Button
-        onClick={handleLoadMore}
-        radius="full"
-        style={{
-          margin: "0px auto",
-          backgroundColor: "#E6E8EB",
-          display: "block",
-          height: "50px",
-          width: "170px",
-          padding: "4px 14px",
-          cursor: "pointer"
-        }}
-      >
-        <Text
-          size="3"
-          weight="regular"
+      {nextCursor && (
+        <Button
+          onClick={handleLoadMore}
+          radius="full"
           style={{
-            color: "#7B8287",
-            fontFamily: "Pretendard Variable"
+            margin: "0px auto",
+            backgroundColor: "#E6E8EB",
+            display: "block",
+            height: "50px",
+            width: "170px",
+            padding: "4px 14px",
+            cursor: "pointer"
           }}
         >
-          게시글 더보기 +
-        </Text>
-      </Button>
+          <Text
+            size="3"
+            weight="regular"
+            style={{
+              color: "#7B8287",
+              fontFamily: "Pretendard Variable"
+            }}
+          >
+            게시글 더보기 +
+          </Text>
+        </Button>
+      )}
     </>
   );
 };
