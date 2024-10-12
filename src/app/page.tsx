@@ -5,12 +5,13 @@ import Popular from "./_component/main/Popular";
 import { Suspense } from "react";
 
 export default async function Home() {
-  const notionArticles = await getArticleInfoList();
-  const topFiveArticles = getTopFiveArticles(notionArticles);
+  const { articles: initialArticles, nextCursor } = await getArticleInfoList();
+  const { articles: popularArticles } = await getArticleInfoList(undefined, true);
+  const topFiveArticles = getTopFiveArticles(popularArticles);
 
   const allRoles = Array.from(
     new Set(
-      notionArticles.flatMap(article =>
+      popularArticles.flatMap(article =>
         article.properties.role?.multi_select.map((role: any) => role.name)
       )
     )
@@ -21,7 +22,11 @@ export default async function Home() {
     <>
       <Popular topArticles={topFiveArticles} />
       <Suspense>
-        <FilterableArticleList articles={notionArticles} roles={roles} />
+        <FilterableArticleList
+          initialArticles={initialArticles}
+          roles={roles}
+          nextCursor={nextCursor}
+        />
       </Suspense>
     </>
   );

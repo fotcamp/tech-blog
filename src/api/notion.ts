@@ -41,7 +41,7 @@ export async function incrementPageView(
 /**
  * get notion database
  */
-export async function queryNotionDatabase(): Promise<DatabaseObjectResponse[]> {
+export async function queryNotionDatabase(startCursor?: string, isPopular = false) {
   try {
     const response = await notionClient.databases.query({
       database_id: process.env.NOTION_DATABASE_ID!,
@@ -54,13 +54,44 @@ export async function queryNotionDatabase(): Promise<DatabaseObjectResponse[]> {
             }
           }
         ]
-      }
+      },
+      start_cursor: startCursor || undefined,
+      page_size: isPopular ? undefined : 4
     });
 
-    return response.results as DatabaseObjectResponse[];
+    console.log("Notion API Response:", response);
+
+    return {
+      results: response.results as DatabaseObjectResponse[],
+      nextCursor: response.next_cursor
+    };
   } catch (error) {
+    console.error("Error in queryNotionDatabase function:", error);
     throw new Error("Error in queryNotionDatabase function");
   }
+}
+
+export async function getArticleInfoList(
+  startCursor?: string,
+  isPopular = false
+): Promise<{ articles: Article[]; nextCursor?: string | null }> {
+  const { results, nextCursor } = await queryNotionDatabase(startCursor, isPopular);
+
+  const articleList = results.map(item => {
+    const itemName = item.properties.name as any;
+    const title = itemName.title[0].plain_text;
+    const coverImageUrl = getCoverImageUrl(item);
+
+    return {
+      pageId: item.id,
+      title: title,
+      createdAt: new Date(item.created_time),
+      thumbnailUrl: coverImageUrl,
+      properties: item.properties
+    };
+  });
+
+  return { articles: articleList as Article[], nextCursor };
 }
 
 /**
@@ -89,27 +120,6 @@ const getCoverImageUrl = (item: DatabaseObjectResponse): string => {
     return "/default_cover_image.png";
   }
 };
-
-export async function getArticleInfoList(): Promise<Article[]> {
-  const database = await queryNotionDatabase();
-
-  const articleList = database.map(item => {
-    const itemName = item.properties.name as any;
-    const title = itemName.title[0].plain_text;
-    const coverImageUrl = getCoverImageUrl(item);
-
-    return {
-      pageId: item.id,
-      title: title,
-      createdAt: new Date(item.created_time),
-      thumbnailUrl: coverImageUrl,
-      properties: item.properties
-    };
-  });
-
-  return articleList as Article[];
-}
-
 /**
  * get notion page markdown
  * @param pageId notion page id
@@ -158,7 +168,6 @@ export const searchArticle = async (key: string) => {
         ]
       }
     });
-
     const result = response.results as DatabaseObjectResponse[];
 
     const titleList = result.map(item => {

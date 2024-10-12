@@ -7,17 +7,23 @@ import { Article } from "../../../api/types";
 import { ArticleCard } from "../../../components/ArticleCard/ArticleCard";
 
 interface FilterableArticleListProps {
-  articles: Article[];
+  initialArticles: Article[];
   roles: string[];
+  nextCursor: string | null | undefined;
 }
 
-const FilterableArticleList = ({ articles, roles }: FilterableArticleListProps) => {
+const FilterableArticleList = ({
+  initialArticles,
+  roles,
+  nextCursor
+}: FilterableArticleListProps) => {
   const searchParams = useSearchParams();
   const initialRole = searchParams.get("role") || "전체";
 
-  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
+  const [filteredArticles, setFilteredArticles] = useState<Article[]>(initialArticles);
   const [selectedRole, setSelectedRole] = useState<string>(initialRole);
   const [visibleCount, setVisibleCount] = useState<number>(4);
+  const [nextCursorState, setNextCursorState] = useState<string | null | undefined>(nextCursor);
 
   useEffect(() => {
     const initialRoleToFilter = initialRole === "전체" ? null : initialRole;
@@ -25,18 +31,33 @@ const FilterableArticleList = ({ articles, roles }: FilterableArticleListProps) 
     const effectiveRoleToFilter = roleToFilter || initialRoleToFilter;
 
     const filtered = !effectiveRoleToFilter
-      ? articles
-      : articles.filter(article =>
+      ? initialArticles
+      : initialArticles.filter(article =>
           article.properties.role?.multi_select.some(
             (roleObj: any) => roleObj.name === effectiveRoleToFilter
           )
         );
 
     setFilteredArticles(filtered);
-  }, [selectedRole, initialRole, articles]);
+  }, [selectedRole, initialRole, initialArticles]);
 
-  const handleLoadMore = () => {
-    setVisibleCount(prevCount => prevCount + 4);
+  const handleLoadMore = async () => {
+    if (nextCursorState) {
+      try {
+        const response = await fetch(`/api/articles?cursor=${nextCursorState}`);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const { articles, nextCursor: newNextCursor } = await response.json();
+
+        setFilteredArticles(prev => [...prev, ...articles]);
+        setNextCursorState(newNextCursor);
+
+        console.log(newNextCursor);
+      } catch (error) {
+        console.error("Error loading more articles:", error);
+      }
+    }
   };
 
   const handleRoleClick = (role: string) => {
@@ -90,7 +111,7 @@ const FilterableArticleList = ({ articles, roles }: FilterableArticleListProps) 
         pb="100px"
         style={{ margin: "50px auto 0 auto" }}
       >
-        {filteredArticles.slice(0, visibleCount).map(item => (
+        {filteredArticles.map(item => (
           <ArticleCard
             key={item.pageId}
             pageId={item.pageId}
@@ -101,32 +122,30 @@ const FilterableArticleList = ({ articles, roles }: FilterableArticleListProps) 
           />
         ))}
       </Grid>
-      {visibleCount < filteredArticles.length && (
-        <Button
-          onClick={handleLoadMore}
-          radius="full"
+      <Button
+        onClick={handleLoadMore}
+        radius="full"
+        style={{
+          margin: "0px auto",
+          backgroundColor: "#E6E8EB",
+          display: "block",
+          height: "50px",
+          width: "170px",
+          padding: "4px 14px",
+          cursor: "pointer"
+        }}
+      >
+        <Text
+          size="3"
+          weight="regular"
           style={{
-            margin: "0px auto",
-            backgroundColor: "#E6E8EB",
-            display: "block",
-            height: "50px",
-            width: "170px",
-            padding: "4px 14px",
-            cursor: "pointer"
+            color: "#7B8287",
+            fontFamily: "Pretendard Variable"
           }}
         >
-          <Text
-            size="3"
-            weight="regular"
-            style={{
-              color: "#7B8287",
-              fontFamily: "Pretendard Variable"
-            }}
-          >
-            게시글 더보기 +
-          </Text>
-        </Button>
-      )}
+          게시글 더보기 +
+        </Text>
+      </Button>
     </>
   );
 };
