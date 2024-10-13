@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Flex, Grid, Text, Button } from "@radix-ui/themes";
 import { Article } from "../../../api/types";
@@ -21,15 +21,12 @@ const FilterableArticleList = ({
   const initialRole = searchParams.get("role") || "전체";
 
   const [filteredArticles, setFilteredArticles] = useState<Article[]>(initialArticles);
-  const [selectedRole, setSelectedRole] = useState<string>(initialRole);
   const [nextCursorState, setNextCursorState] = useState<string | null | undefined>(nextCursor);
 
   const handleLoadMore = async () => {
     if (nextCursorState) {
       try {
-        const response = await fetch(
-          `/api/articles?cursor=${nextCursorState}&role=${selectedRole}`
-        );
+        const response = await fetch(`/api/articles?cursor=${nextCursorState}&role=${initialRole}`);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -68,7 +65,7 @@ const FilterableArticleList = ({
             onClick={() => handleRoleClick(role)}
             radius="full"
             style={{
-              backgroundColor: selectedRole === role ? "#25292C" : "#E6E8EB",
+              backgroundColor: initialRole === role ? "#25292C" : "#E6E8EB",
               display: "inline-flex",
               height: "36px",
               padding: "4px 14px",
@@ -79,7 +76,7 @@ const FilterableArticleList = ({
               size="3"
               weight="regular"
               style={{
-                color: selectedRole === role ? "#FFFFFF" : "#7B8287"
+                color: initialRole === role ? "#FFFFFF" : "#7B8287"
               }}
             >
               {role}
