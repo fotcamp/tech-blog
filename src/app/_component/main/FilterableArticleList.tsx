@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Flex, Grid, Text, Button } from "@radix-ui/themes";
 import { Article } from "../../../api/types";
@@ -25,10 +25,10 @@ const FilterableArticleList = ({
   const [nextCursorState, setNextCursorState] = useState<string | null | undefined>(nextCursor);
   const [role, setRole] = useState(initialRole);
 
-  const fetchArticles = async (newRole?: string, cursor?: string) => {
+  const fetchArticles = async (newRole: string, cursor?: string) => {
     try {
       const response = await fetch(
-        `/api/articles?${cursor ? `cursor=${cursor}&` : ""}role=${newRole || role}`
+        `/api/articles?${cursor ? `cursor=${cursor}&` : ""}role=${newRole}`
       );
       const data = await response.json();
       return data;
@@ -37,22 +37,17 @@ const FilterableArticleList = ({
     }
   };
 
-  useEffect(() => {
-    const loadArticles = async () => {
-      const data = await fetchArticles(role);
-      if (data) {
-        setFilteredArticles(data.articles);
-        setNextCursorState(data.nextCursor);
-      }
-    };
-    loadArticles();
-  }, [role]);
-
-  const handleRoleClick = (newRole: string) => {
+  const handleRoleClick = async (newRole: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("role", newRole);
     router.push(`?${params.toString()}`);
     setRole(newRole);
+
+    const data = await fetchArticles(newRole);
+    if (data) {
+      setFilteredArticles(data.articles);
+      setNextCursorState(data.nextCursor);
+    }
   };
 
   const handleLoadMore = async () => {
