@@ -7,10 +7,13 @@ export async function GET(request: Request) {
   const role = searchParams.get("role");
 
   try {
-    const { articles, nextCursor } = await getArticleInfoList(cursor as string, false, role);
+    const { articles, nextCursor } = await getArticleInfoList(
+      cursor as string,
+      false,
+      role as string | undefined
+    );
     return NextResponse.json({ articles, nextCursor });
   } catch (error) {
     console.error("API Error:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

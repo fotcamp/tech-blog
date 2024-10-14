@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { Flex, Grid, Text, Button } from "@radix-ui/themes";
 import { Article } from "../../../api/types";
 import { ArticleCard } from "../../../components/ArticleCard/ArticleCard";
@@ -18,38 +18,53 @@ const FilterableArticleList = ({
   nextCursor
 }: FilterableArticleListProps) => {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const initialRole = searchParams.get("role") || "전체";
 
   const [filteredArticles, setFilteredArticles] = useState<Article[]>(initialArticles);
   const [nextCursorState, setNextCursorState] = useState<string | null | undefined>(nextCursor);
+  const [role, setRole] = useState(initialRole);
+
+  const fetchArticles = async (newRole?: string, cursor?: string) => {
+    try {
+      const response = await fetch(
+        `/api/articles?${cursor ? `cursor=${cursor}&` : ""}role=${newRole || role}`
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+    }
+  };
+
+  useEffect(() => {
+    const loadArticles = async () => {
+      const data = await fetchArticles(role);
+      if (data) {
+        setFilteredArticles(data.articles);
+        setNextCursorState(data.nextCursor);
+      }
+    };
+    loadArticles();
+  }, [role]);
+
+  const handleRoleClick = (newRole: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("role", newRole);
+    router.push(`?${params.toString()}`);
+    setRole(newRole);
+  };
 
   const handleLoadMore = async () => {
     if (nextCursorState) {
-      try {
-        const response = await fetch(`/api/articles?cursor=${nextCursorState}&role=${initialRole}`);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const { articles, nextCursor: newNextCursor } = await response.json();
-
-        setFilteredArticles(prev => [...prev, ...articles]);
-        setNextCursorState(newNextCursor);
-
-        console.log(newNextCursor);
-      } catch (error) {
-        console.error("Error loading more articles:", error);
+      const data = await fetchArticles(role, nextCursorState);
+      if (data) {
+        setFilteredArticles(prev => [...prev, ...data.articles]);
+        setNextCursorState(data.nextCursor);
       }
     }
   };
 
-  const handleRoleClick = (role: string) => {
-    const params = new URLSearchParams(window.location.search);
-    params.set("role", role);
-    const newUrl = `${window.location.pathname}?${params.toString()}`;
-    window.history.pushState(null, "", newUrl);
-
-    window.location.reload();
-  };
   return (
     <>
       <Flex
@@ -65,7 +80,7 @@ const FilterableArticleList = ({
             onClick={() => handleRoleClick(role)}
             radius="full"
             style={{
-              backgroundColor: initialRole === role ? "#25292C" : "#E6E8EB",
+              backgroundColor: role === initialRole ? "#25292C" : "#E6E8EB",
               display: "inline-flex",
               height: "36px",
               padding: "4px 14px",
@@ -76,7 +91,7 @@ const FilterableArticleList = ({
               size="3"
               weight="regular"
               style={{
-                color: initialRole === role ? "#FFFFFF" : "#7B8287"
+                color: role === initialRole ? "#FFFFFF" : "#7B8287"
               }}
             >
               {role}
@@ -104,7 +119,7 @@ const FilterableArticleList = ({
           />
         ))}
       </Grid>
-      {nextCursor && (
+      {nextCursorState && (
         <Button
           onClick={handleLoadMore}
           radius="full"

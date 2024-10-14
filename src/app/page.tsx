@@ -3,7 +3,6 @@ import "./page.css";
 import FilterableArticleList from "./_component/main/FilterableArticleList";
 import Popular from "./_component/main/Popular";
 import { Suspense } from "react";
-import { redirect } from "next/navigation";
 
 export default async function Home({ searchParams }: { searchParams: { role?: string } }) {
   const selectedRole = searchParams.role || "전체";

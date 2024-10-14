@@ -70,7 +70,7 @@ export async function queryNotionDatabase(
         and: filters
       },
       start_cursor: startCursor || undefined,
-      page_size: isPopular ? undefined : 2
+      page_size: isPopular ? undefined : 4
     });
 
     console.log("Notion API Response:", response);
@@ -81,7 +81,6 @@ export async function queryNotionDatabase(
     };
   } catch (error) {
     console.error("Error in queryNotionDatabase function:", error);
-    throw new Error("Error in queryNotionDatabase function");
   }
 }
 
@@ -90,11 +89,17 @@ export async function getArticleInfoList(
   isPopular = false,
   role?: string
 ): Promise<{ articles: Article[]; nextCursor?: string | null; role?: string | undefined }> {
-  const { results, nextCursor } = await queryNotionDatabase(
+  const result = await queryNotionDatabase(
     startCursor,
     isPopular,
     role === "전체" ? undefined : role
   );
+
+  if (!result) {
+    return { articles: [], nextCursor: null };
+  }
+
+  const { results, nextCursor } = result;
 
   const articleList = results.map(item => {
     const itemName = item.properties.name as any;
@@ -253,7 +258,10 @@ export async function getPostPage(pageId: string): Promise<PostPage> {
 // 조회수 순으로 상위 5개
 export function getTopFiveArticles(articles: Article[]): Article[] {
   const topFiveArticles = articles
-    .sort((a, b) => (b.properties.views?.number ?? 0) - (a.properties.views?.number ?? 0))
+    .sort(
+      (postA, postB) =>
+        (postB.properties.views?.number ?? 0) - (postA.properties.views?.number ?? 0)
+    )
     .slice(0, 5);
 
   return topFiveArticles;
