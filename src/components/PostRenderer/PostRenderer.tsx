@@ -29,7 +29,7 @@ const getHeadingText = (children: React.ReactNode): string => {
 export const PostRenderer = async ({ content }: { content: string }) => {
   return (
     <Box>
-      <IndexList content={content} />
+      {content && <IndexList content={content} />}
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw, rehypeHighlight, [rehypeAttrs, { properties: "attr" }]]}
