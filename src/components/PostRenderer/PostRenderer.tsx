@@ -13,8 +13,8 @@ import {
   IndexList,
   CustomCheckbox
 } from "./components";
-import React, { Fragment } from "react";
-import { Box, Heading } from "@radix-ui/themes";
+import React from "react";
+import { Box, Em, Heading } from "@radix-ui/themes";
 import rehypeRaw from "rehype-raw";
 import rehypeAttrs from "rehype-attr";
 
@@ -26,10 +26,11 @@ const getHeadingText = (children: React.ReactNode): string => {
   return headingText;
 };
 
-export const PostRenderer = async ({ content }: { content: string }) => {
+export const PostRenderer = async ({ content }: { content?: string }) => {
+  if (!content) return <Em>글 작성중 입니다!</Em>;
   return (
     <Box>
-      {content && <IndexList content={content} />}
+      <IndexList content={content} />
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw, rehypeHighlight, [rehypeAttrs, { properties: "attr" }]]}
