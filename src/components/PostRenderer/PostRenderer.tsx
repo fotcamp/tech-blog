@@ -26,7 +26,7 @@ const getHeadingText = (children: React.ReactNode): string => {
   return headingText;
 };
 
-export const PostRenderer = async ({ content }: { content?: string }) => {
+export const PostRenderer = ({ content }: { content?: string }) => {
   if (!content) return <Em>글 작성중 입니다!</Em>;
   return (
     <Box>
